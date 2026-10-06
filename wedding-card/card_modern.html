@@ -1,0 +1,230 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Abhishek &amp; Sonali: Wedding Invitation</title>
+<style>
+@font-face{font-family:'Cinzel';font-style:normal;font-weight:500;src:url('fonts/Cinzel-500.ttf');}
+@font-face{font-family:'Cinzel';font-style:normal;font-weight:600;src:url('fonts/Cinzel-600.ttf');}
+@font-face{font-family:'Cinzel';font-style:normal;font-weight:700;src:url('fonts/Cinzel-700.ttf');}
+@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:400;src:url('fonts/CormorantGaramond-400i.ttf');}
+@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:500;src:url('fonts/CormorantGaramond-500i.ttf');}
+@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:400;src:url('fonts/CormorantGaramond-400.ttf');}
+@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:500;src:url('fonts/CormorantGaramond-500.ttf');}
+@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:600;src:url('fonts/CormorantGaramond-600.ttf');}
+@font-face{font-family:'Great Vibes';font-style:normal;font-weight:400;src:url('fonts/GreatVibes-400.ttf');}
+@font-face{font-family:'Tiro Devanagari Sanskrit';font-style:normal;font-weight:400;src:url('fonts/TiroDevanagariSanskrit-400.ttf');}@font-face{font-family:'Bodoni Moda';font-style:italic;font-weight:400;src:url('fonts/BodoniModa-400i.ttf');}
+@font-face{font-family:'Bodoni Moda';font-style:italic;font-weight:500;src:url('fonts/BodoniModa-500i.ttf');}
+@font-face{font-family:'Bodoni Moda';font-style:normal;font-weight:400;src:url('fonts/BodoniModa-400.ttf');}
+@font-face{font-family:'Bodoni Moda';font-style:normal;font-weight:500;src:url('fonts/BodoniModa-500.ttf');}
+@font-face{font-family:'Jost';font-style:normal;font-weight:300;src:url('fonts/Jost-300.ttf');}
+@font-face{font-family:'Jost';font-style:normal;font-weight:400;src:url('fonts/Jost-400.ttf');}
+@font-face{font-family:'Jost';font-style:normal;font-weight:500;src:url('fonts/Jost-500.ttf');}
+@page { size: 5in 7in; margin: 0; }
+html, body { margin: 0; background: #f8f2ea; }
+.card { position: relative; width: 1500px; height: 2100px; overflow: hidden; }
+.card > svg { position: absolute; inset: 0; }
+.c { position: absolute; left: 250px; right: 250px; top: 255px; text-align: center; color: #3b2a25; }
+.mono { width: 150px; height: 150px; margin: 0 auto; border: 1.5px solid #b8935a; border-radius: 50%;
+        position: relative; font-family: 'Bodoni Moda', serif; font-style: italic; font-size: 58px; color: #b5634a; }
+.mono span { position: absolute; }
+.mono .a { left: 32px; top: 22px; } .mono .s { right: 34px; bottom: 26px; }
+.mono::after { content: ''; position: absolute; left: 50%; top: 22px; height: 106px; width: 1.4px;
+               background: #b8935a; transform: rotate(32deg); }
+.ganesh { font-family: 'Tiro Devanagari Sanskrit', serif; font-size: 30px; color: #b5634a; margin-top: 34px;
+          letter-spacing: 1px; }
+.small { font-family: 'Jost', sans-serif; font-weight: 400; font-size: 23px; letter-spacing: 9px;
+         text-transform: uppercase; color: #7a5d52; }
+.eyebrow { margin-top: 40px; }
+.first { font-family: 'Bodoni Moda', serif; font-weight: 400; font-size: 140px; line-height: 1; color: #3b2a25;
+         letter-spacing: -1px; }
+.f1 { margin-top: 40px; }
+.last { font-family: 'Jost', sans-serif; font-weight: 400; font-size: 26px; letter-spacing: 14px;
+        text-transform: uppercase; color: #b5634a; margin-top: 10px; }
+.amp { font-family: 'Bodoni Moda', serif; font-style: italic; font-size: 88px; color: #b8935a; line-height: 1;
+       margin: 26px 0 18px; }
+.invite { font-family: 'Bodoni Moda', serif; font-style: italic; font-size: 34px; line-height: 1.45;
+          color: #5b443c; margin-top: 52px; }
+.events { display: grid; grid-template-columns: 1fr 1fr; margin-top: 110px; }
+.ev { padding: 0 30px; }
+.ev .small { font-size: 21px; letter-spacing: 8px; color: #b5634a; font-weight: 500; }
+.ev .day { font-family: 'Jost', sans-serif; font-size: 24px; letter-spacing: 6px; text-transform: uppercase;
+           color: #7a5d52; margin-top: 26px; }
+.ev .date { font-family: 'Bodoni Moda', serif; font-size: 96px; line-height: 1; margin-top: 8px; color: #3b2a25; }
+.ev .month { font-family: 'Bodoni Moda', serif; font-style: italic; font-size: 36px; color: #3b2a25; margin-top: 6px; }
+.ev .time { font-family: 'Jost', sans-serif; font-weight: 300; font-size: 24px; letter-spacing: 4px;
+            text-transform: uppercase; color: #7a5d52; margin-top: 14px; }
+.ev .venue { font-family: 'Bodoni Moda', serif; font-size: 31px; line-height: 1.3; margin-top: 22px; color: #3b2a25; }
+.foot { position: absolute; left: 0; right: 0; bottom: 140px; text-align: center; }
+.foot .bless { font-family: 'Bodoni Moda', serif; font-style: italic; font-size: 30px; color: #5b443c; }
+.foot .small { margin-top: 16px; font-size: 20px; letter-spacing: 8px; }
+</style></head><body><div class="card">
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="2100" viewBox="0 0 1500 2100">
+<defs>
+  <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/>
+    <feColorMatrix values="0 0 0 0 0.45  0 0 0 0 0.35  0 0 0 0 0.3  0 0 0 0.05 0"/></filter>
+  <linearGradient id="archfill" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#f4e4db"/><stop offset="100%" stop-color="#f1ddd2"/></linearGradient>
+</defs>
+<rect width="1500" height="2100" fill="#f8f2ea"/>
+<path d="M210 1810 L210 710.0 A540.0 540.0 0 0 1 1290 710.0 L1290 1810 Z" fill="url(#archfill)"/>
+<path d="M236 1784 L236 684.0 A540.0 540.0 0 0 1 1316 684.0 L1316 1784 Z" fill="none" stroke="#b8935a" stroke-width="1.6"/>
+
+<g fill="none" stroke="#7f9472" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M170.0 1770.0 Q315.6 1535.1 278.1 1261.4" fill="none"/>
+<path d="M0 0 Q 29.400000000000002 -18.816000000000003 58.800000000000004 0 Q 29.400000000000002 18.816000000000003 0 0 Z M0 0 L49.980000000000004 0" transform="translate(197.3 1722.6) rotate(-13.9)"/>
+<path d="M0 0 Q 28.0 -17.92 56.0 0 Q 28.0 17.92 0 0 Z M0 0 L47.6 0" transform="translate(220.9 1674.5) rotate(-113.8)"/>
+<path d="M0 0 Q 26.6 -17.024 53.2 0 Q 26.6 17.024 0 0 Z M0 0 L45.22 0" transform="translate(240.9 1625.6) rotate(-21.8)"/>
+<path d="M0 0 Q 25.200000000000003 -16.128000000000004 50.400000000000006 0 Q 25.200000000000003 16.128000000000004 0 0 Z M0 0 L42.84 0" transform="translate(257.2 1575.9) rotate(-121.9)"/>
+<path d="M0 0 Q 23.800000000000004 -15.232000000000003 47.60000000000001 0 Q 23.800000000000004 15.232000000000003 0 0 Z M0 0 L40.46000000000001 0" transform="translate(269.8 1525.4) rotate(-30.0)"/>
+<path d="M0 0 Q 22.400000000000002 -14.336000000000002 44.800000000000004 0 Q 22.400000000000002 14.336000000000002 0 0 Z M0 0 L38.080000000000005 0" transform="translate(278.8 1474.2) rotate(-130.1)"/>
+<path d="M0 0 Q 21.000000000000004 -13.440000000000003 42.00000000000001 0 Q 21.000000000000004 13.440000000000003 0 0 Z M0 0 L35.7 0" transform="translate(284.1 1422.1) rotate(-38.2)"/>
+<path d="M0 0 Q 19.6 -12.544 39.2 0 Q 19.6 12.544 0 0 Z M0 0 L33.32 0" transform="translate(285.8 1369.3) rotate(-138.2)"/>
+<path d="M0 0 Q 18.200000000000003 -11.648000000000001 36.400000000000006 0 Q 18.200000000000003 11.648000000000001 0 0 Z M0 0 L30.940000000000005 0" transform="translate(283.8 1315.7) rotate(-46.1)"/>
+<path d="M0 0 Q 16.8 -11.200000000000001 33.6 0 Q 16.8 11.200000000000001 0 0 Z M0 0 L28.56 0" transform="translate(278.1 1261.4) rotate(-97.8)"/>
+  <path d="M190.0 1780.0 Q210.0 1668.7 301.3 1601.9" fill="none"/>
+<path d="M0 0 Q 22.36666666666667 -14.31466666666667 44.73333333333334 0 Q 22.36666666666667 14.31466666666667 0 0 Z M0 0 L38.02333333333334 0" transform="translate(198.7 1744.1) rotate(-24.9)"/>
+<path d="M0 0 Q 20.533333333333335 -13.141333333333336 41.06666666666667 0 Q 20.533333333333335 13.141333333333336 0 0 Z M0 0 L34.906666666666666 0" transform="translate(211.3 1710.7) rotate(-113.6)"/>
+<path d="M0 0 Q 18.700000000000003 -11.968000000000002 37.400000000000006 0 Q 18.700000000000003 11.968000000000002 0 0 Z M0 0 L31.790000000000003 0" transform="translate(227.8 1679.8) rotate(-10.0)"/>
+<path d="M0 0 Q 16.86666666666667 -10.79466666666667 33.73333333333334 0 Q 16.86666666666667 10.79466666666667 0 0 Z M0 0 L28.67333333333334 0" transform="translate(248.4 1651.4) rotate(-98.4)"/>
+<path d="M0 0 Q 15.033333333333333 -9.621333333333334 30.066666666666666 0 Q 15.033333333333333 9.621333333333334 0 0 Z M0 0 L25.556666666666665 0" transform="translate(272.8 1625.4) rotate(4.9)"/>
+<path d="M0 0 Q 13.2 -8.8 26.4 0 Q 13.2 8.8 0 0 Z M0 0 L22.439999999999998 0" transform="translate(301.3 1601.9) rotate(-36.2)"/>
+  <path d="M180.0 1820.0 Q270.1 1850.3 348.3 1796.3" fill="none"/>
+<path d="M0 0 Q 19.0 -12.16 38.0 0 Q 19.0 12.16 0 0 Z M0 0 L32.3 0" transform="translate(215.6 1828.7) rotate(56.7)"/>
+<path d="M0 0 Q 17.1 -10.944 34.2 0 Q 17.1 10.944 0 0 Z M0 0 L29.07 0" transform="translate(250.2 1830.7) rotate(-50.3)"/>
+<path d="M0 0 Q 15.200000000000001 -9.728000000000002 30.400000000000002 0 Q 15.200000000000001 9.728000000000002 0 0 Z M0 0 L25.84 0" transform="translate(283.8 1826.0) rotate(34.3)"/>
+<path d="M0 0 Q 13.3 -8.512 26.6 0 Q 13.3 8.512 0 0 Z M0 0 L22.61 0" transform="translate(316.6 1814.5) rotate(-72.7)"/>
+<path d="M0 0 Q 11.4 -7.6000000000000005 22.8 0 Q 11.4 7.6000000000000005 0 0 Z M0 0 L19.38 0" transform="translate(348.3 1796.3) rotate(-34.6)"/>
+  <path d="M1330.0 640.0 Q1231.1 492.3 1261.4 317.2" fill="none"/>
+<path d="M0 0 Q 23.8625 -15.272 47.725 0 Q 23.8625 15.272 0 0 Z M0 0 L40.566250000000004 0" transform="translate(1307.3 602.7) rotate(-70.7)"/>
+<path d="M0 0 Q 22.425 -14.352 44.85 0 Q 22.425 14.352 0 0 Z M0 0 L38.1225 0" transform="translate(1288.6 564.4) rotate(-161.3)"/>
+<path d="M0 0 Q 20.9875 -13.432 41.975 0 Q 20.9875 13.432 0 0 Z M0 0 L35.67875 0" transform="translate(1274.0 525.4) rotate(-59.7)"/>
+<path d="M0 0 Q 19.55 -12.512 39.1 0 Q 19.55 12.512 0 0 Z M0 0 L33.235 0" transform="translate(1263.4 485.5) rotate(-150.0)"/>
+<path d="M0 0 Q 18.1125 -11.592 36.225 0 Q 18.1125 11.592 0 0 Z M0 0 L30.79125 0" transform="translate(1256.9 444.7) rotate(-48.3)"/>
+<path d="M0 0 Q 16.675 -10.672 33.35 0 Q 16.675 10.672 0 0 Z M0 0 L28.3475 0" transform="translate(1254.3 403.1) rotate(-138.7)"/>
+<path d="M0 0 Q 15.237500000000002 -9.752000000000002 30.475000000000005 0 Q 15.237500000000002 9.752000000000002 0 0 Z M0 0 L25.903750000000002 0" transform="translate(1255.8 360.6) rotate(-37.3)"/>
+<path d="M0 0 Q 13.799999999999999 -9.200000000000001 27.599999999999998 0 Q 13.799999999999999 9.200000000000001 0 0 Z M0 0 L23.459999999999997 0" transform="translate(1261.4 317.2) rotate(-80.2)"/>
+  <path d="M1320.0 670.0 Q1239.9 548.7 1094.8 540.0" fill="none"/>
+<path d="M0 0 Q 20.333333333333336 -13.013333333333335 40.66666666666667 0 Q 20.333333333333336 13.013333333333335 0 0 Z M0 0 L34.56666666666667 0" transform="translate(1291.5 632.7) rotate(-83.6)"/>
+<path d="M0 0 Q 18.666666666666668 -11.946666666666667 37.333333333333336 0 Q 18.666666666666668 11.946666666666667 0 0 Z M0 0 L31.733333333333334 0" transform="translate(1259.4 601.6) rotate(-188.5)"/>
+<path d="M0 0 Q 17.0 -10.88 34.0 0 Q 17.0 10.88 0 0 Z M0 0 L28.9 0" transform="translate(1223.7 576.9) rotate(-102.0)"/>
+<path d="M0 0 Q 15.333333333333336 -9.813333333333334 30.66666666666667 0 Q 15.333333333333336 9.813333333333334 0 0 Z M0 0 L26.06666666666667 0" transform="translate(1184.3 558.3) rotate(-207.5)"/>
+<path d="M0 0 Q 13.666666666666668 -8.746666666666668 27.333333333333336 0 Q 13.666666666666668 8.746666666666668 0 0 Z M0 0 L23.233333333333334 0" transform="translate(1141.4 546.0) rotate(-120.4)"/>
+<path d="M0 0 Q 12.0 -8.0 24.0 0 Q 12.0 8.0 0 0 Z M0 0 L20.4 0" transform="translate(1094.8 540.0) rotate(-176.6)"/>
+</g>
+<g fill="#f8f2ea" stroke="#b5634a" stroke-width="1.8">
+  <path d="M0 0 C 14.7 -11.760000000000002 35.699999999999996 -12.6 42 0 C 35.699999999999996 12.6 14.7 11.760000000000002 0 0 Z" transform="translate(258 1275) rotate(10.0)"/>
+<path d="M0 0 C 14.7 -11.760000000000002 35.699999999999996 -12.6 42 0 C 35.699999999999996 12.6 14.7 11.760000000000002 0 0 Z" transform="translate(258 1275) rotate(50.0)"/>
+<path d="M0 0 C 14.7 -11.760000000000002 35.699999999999996 -12.6 42 0 C 35.699999999999996 12.6 14.7 11.760000000000002 0 0 Z" transform="translate(258 1275) rotate(90.0)"/>
+<path d="M0 0 C 14.7 -11.760000000000002 35.699999999999996 -12.6 42 0 C 35.699999999999996 12.6 14.7 11.760000000000002 0 0 Z" transform="translate(258 1275) rotate(130.0)"/>
+<path d="M0 0 C 14.7 -11.760000000000002 35.699999999999996 -12.6 42 0 C 35.699999999999996 12.6 14.7 11.760000000000002 0 0 Z" transform="translate(258 1275) rotate(170.0)"/>
+<path d="M0 0 C 14.7 -11.760000000000002 35.699999999999996 -12.6 42 0 C 35.699999999999996 12.6 14.7 11.760000000000002 0 0 Z" transform="translate(258 1275) rotate(210.0)"/>
+<path d="M0 0 C 14.7 -11.760000000000002 35.699999999999996 -12.6 42 0 C 35.699999999999996 12.6 14.7 11.760000000000002 0 0 Z" transform="translate(258 1275) rotate(250.0)"/>
+<path d="M0 0 C 14.7 -11.760000000000002 35.699999999999996 -12.6 42 0 C 35.699999999999996 12.6 14.7 11.760000000000002 0 0 Z" transform="translate(258 1275) rotate(290.0)"/>
+<path d="M0 0 C 14.7 -11.760000000000002 35.699999999999996 -12.6 42 0 C 35.699999999999996 12.6 14.7 11.760000000000002 0 0 Z" transform="translate(258 1275) rotate(330.0)"/>
+<circle cx="258" cy="1275" r="9.2" fill="#f8f2ea"/>
+<circle cx="262.2" cy="1275.0" r="2.2" fill="#b5634a" stroke="none"/>
+<circle cx="260.1" cy="1278.6" r="2.2" fill="#b5634a" stroke="none"/>
+<circle cx="255.9" cy="1278.6" r="2.2" fill="#b5634a" stroke="none"/>
+<circle cx="253.8" cy="1275.0" r="2.2" fill="#b5634a" stroke="none"/>
+<circle cx="255.9" cy="1271.4" r="2.2" fill="#b5634a" stroke="none"/>
+<circle cx="260.1" cy="1271.4" r="2.2" fill="#b5634a" stroke="none"/>
+  <path d="M0 0 C 10.5 -8.4 25.5 -9.0 30 0 C 25.5 9.0 10.5 8.4 0 0 Z" transform="translate(295 1595) rotate(25.0)"/>
+<path d="M0 0 C 10.5 -8.4 25.5 -9.0 30 0 C 25.5 9.0 10.5 8.4 0 0 Z" transform="translate(295 1595) rotate(70.0)"/>
+<path d="M0 0 C 10.5 -8.4 25.5 -9.0 30 0 C 25.5 9.0 10.5 8.4 0 0 Z" transform="translate(295 1595) rotate(115.0)"/>
+<path d="M0 0 C 10.5 -8.4 25.5 -9.0 30 0 C 25.5 9.0 10.5 8.4 0 0 Z" transform="translate(295 1595) rotate(160.0)"/>
+<path d="M0 0 C 10.5 -8.4 25.5 -9.0 30 0 C 25.5 9.0 10.5 8.4 0 0 Z" transform="translate(295 1595) rotate(205.0)"/>
+<path d="M0 0 C 10.5 -8.4 25.5 -9.0 30 0 C 25.5 9.0 10.5 8.4 0 0 Z" transform="translate(295 1595) rotate(250.0)"/>
+<path d="M0 0 C 10.5 -8.4 25.5 -9.0 30 0 C 25.5 9.0 10.5 8.4 0 0 Z" transform="translate(295 1595) rotate(295.0)"/>
+<path d="M0 0 C 10.5 -8.4 25.5 -9.0 30 0 C 25.5 9.0 10.5 8.4 0 0 Z" transform="translate(295 1595) rotate(340.0)"/>
+<circle cx="295" cy="1595" r="6.6" fill="#f8f2ea"/>
+<circle cx="298.0" cy="1595.0" r="2.2" fill="#b5634a" stroke="none"/>
+<circle cx="296.5" cy="1597.6" r="2.2" fill="#b5634a" stroke="none"/>
+<circle cx="293.5" cy="1597.6" r="2.2" fill="#b5634a" stroke="none"/>
+<circle cx="292.0" cy="1595.0" r="2.2" fill="#b5634a" stroke="none"/>
+<circle cx="293.5" cy="1592.4" r="2.2" fill="#b5634a" stroke="none"/>
+<circle cx="296.5" cy="1592.4" r="2.2" fill="#b5634a" stroke="none"/>
+  <path d="M0 0 C 9.1 -7.280000000000001 22.099999999999998 -7.8 26 0 C 22.099999999999998 7.8 9.1 7.280000000000001 0 0 Z" transform="translate(205 1510) rotate(0.0)"/>
+<path d="M0 0 C 9.1 -7.280000000000001 22.099999999999998 -7.8 26 0 C 22.099999999999998 7.8 9.1 7.280000000000001 0 0 Z" transform="translate(205 1510) rotate(51.42857142857143)"/>
+<path d="M0 0 C 9.1 -7.280000000000001 22.099999999999998 -7.8 26 0 C 22.099999999999998 7.8 9.1 7.280000000000001 0 0 Z" transform="translate(205 1510) rotate(102.85714285714286)"/>
+<path d="M0 0 C 9.1 -7.280000000000001 22.099999999999998 -7.8 26 0 C 22.099999999999998 7.8 9.1 7.280000000000001 0 0 Z" transform="translate(205 1510) rotate(154.28571428571428)"/>
+<path d="M0 0 C 9.1 -7.280000000000001 22.099999999999998 -7.8 26 0 C 22.099999999999998 7.8 9.1 7.280000000000001 0 0 Z" transform="translate(205 1510) rotate(205.71428571428572)"/>
+<path d="M0 0 C 9.1 -7.280000000000001 22.099999999999998 -7.8 26 0 C 22.099999999999998 7.8 9.1 7.280000000000001 0 0 Z" transform="translate(205 1510) rotate(257.14285714285717)"/>
+<path d="M0 0 C 9.1 -7.280000000000001 22.099999999999998 -7.8 26 0 C 22.099999999999998 7.8 9.1 7.280000000000001 0 0 Z" transform="translate(205 1510) rotate(308.57142857142856)"/>
+<circle cx="205" cy="1510" r="5.7" fill="#f8f2ea"/>
+<circle cx="207.6" cy="1510.0" r="2.2" fill="#b5634a" stroke="none"/>
+<circle cx="206.3" cy="1512.3" r="2.2" fill="#b5634a" stroke="none"/>
+<circle cx="203.7" cy="1512.3" r="2.2" fill="#b5634a" stroke="none"/>
+<circle cx="202.4" cy="1510.0" r="2.2" fill="#b5634a" stroke="none"/>
+<circle cx="203.7" cy="1507.7" r="2.2" fill="#b5634a" stroke="none"/>
+<circle cx="206.3" cy="1507.7" r="2.2" fill="#b5634a" stroke="none"/>
+  <path d="M0 0 C 14.0 -11.200000000000001 34.0 -12.0 40 0 C 34.0 12.0 14.0 11.200000000000001 0 0 Z" transform="translate(1308 320) rotate(5.0)"/>
+<path d="M0 0 C 14.0 -11.200000000000001 34.0 -12.0 40 0 C 34.0 12.0 14.0 11.200000000000001 0 0 Z" transform="translate(1308 320) rotate(45.0)"/>
+<path d="M0 0 C 14.0 -11.200000000000001 34.0 -12.0 40 0 C 34.0 12.0 14.0 11.200000000000001 0 0 Z" transform="translate(1308 320) rotate(85.0)"/>
+<path d="M0 0 C 14.0 -11.200000000000001 34.0 -12.0 40 0 C 34.0 12.0 14.0 11.200000000000001 0 0 Z" transform="translate(1308 320) rotate(125.0)"/>
+<path d="M0 0 C 14.0 -11.200000000000001 34.0 -12.0 40 0 C 34.0 12.0 14.0 11.200000000000001 0 0 Z" transform="translate(1308 320) rotate(165.0)"/>
+<path d="M0 0 C 14.0 -11.200000000000001 34.0 -12.0 40 0 C 34.0 12.0 14.0 11.200000000000001 0 0 Z" transform="translate(1308 320) rotate(205.0)"/>
+<path d="M0 0 C 14.0 -11.200000000000001 34.0 -12.0 40 0 C 34.0 12.0 14.0 11.200000000000001 0 0 Z" transform="translate(1308 320) rotate(245.0)"/>
+<path d="M0 0 C 14.0 -11.200000000000001 34.0 -12.0 40 0 C 34.0 12.0 14.0 11.200000000000001 0 0 Z" transform="translate(1308 320) rotate(285.0)"/>
+<path d="M0 0 C 14.0 -11.200000000000001 34.0 -12.0 40 0 C 34.0 12.0 14.0 11.200000000000001 0 0 Z" transform="translate(1308 320) rotate(325.0)"/>
+<circle cx="1308" cy="320" r="8.8" fill="#f8f2ea"/>
+<circle cx="1312.0" cy="320.0" r="2.2" fill="#b5634a" stroke="none"/>
+<circle cx="1310.0" cy="323.5" r="2.2" fill="#b5634a" stroke="none"/>
+<circle cx="1306.0" cy="323.5" r="2.2" fill="#b5634a" stroke="none"/>
+<circle cx="1304.0" cy="320.0" r="2.2" fill="#b5634a" stroke="none"/>
+<circle cx="1306.0" cy="316.5" r="2.2" fill="#b5634a" stroke="none"/>
+<circle cx="1310.0" cy="316.5" r="2.2" fill="#b5634a" stroke="none"/>
+  <path d="M0 0 C 9.799999999999999 -7.840000000000001 23.8 -8.4 28 0 C 23.8 8.4 9.799999999999999 7.840000000000001 0 0 Z" transform="translate(1140 440) rotate(20.0)"/>
+<path d="M0 0 C 9.799999999999999 -7.840000000000001 23.8 -8.4 28 0 C 23.8 8.4 9.799999999999999 7.840000000000001 0 0 Z" transform="translate(1140 440) rotate(65.0)"/>
+<path d="M0 0 C 9.799999999999999 -7.840000000000001 23.8 -8.4 28 0 C 23.8 8.4 9.799999999999999 7.840000000000001 0 0 Z" transform="translate(1140 440) rotate(110.0)"/>
+<path d="M0 0 C 9.799999999999999 -7.840000000000001 23.8 -8.4 28 0 C 23.8 8.4 9.799999999999999 7.840000000000001 0 0 Z" transform="translate(1140 440) rotate(155.0)"/>
+<path d="M0 0 C 9.799999999999999 -7.840000000000001 23.8 -8.4 28 0 C 23.8 8.4 9.799999999999999 7.840000000000001 0 0 Z" transform="translate(1140 440) rotate(200.0)"/>
+<path d="M0 0 C 9.799999999999999 -7.840000000000001 23.8 -8.4 28 0 C 23.8 8.4 9.799999999999999 7.840000000000001 0 0 Z" transform="translate(1140 440) rotate(245.0)"/>
+<path d="M0 0 C 9.799999999999999 -7.840000000000001 23.8 -8.4 28 0 C 23.8 8.4 9.799999999999999 7.840000000000001 0 0 Z" transform="translate(1140 440) rotate(290.0)"/>
+<path d="M0 0 C 9.799999999999999 -7.840000000000001 23.8 -8.4 28 0 C 23.8 8.4 9.799999999999999 7.840000000000001 0 0 Z" transform="translate(1140 440) rotate(335.0)"/>
+<circle cx="1140" cy="440" r="6.2" fill="#f8f2ea"/>
+<circle cx="1142.8" cy="440.0" r="2.2" fill="#b5634a" stroke="none"/>
+<circle cx="1141.4" cy="442.4" r="2.2" fill="#b5634a" stroke="none"/>
+<circle cx="1138.6" cy="442.4" r="2.2" fill="#b5634a" stroke="none"/>
+<circle cx="1137.2" cy="440.0" r="2.2" fill="#b5634a" stroke="none"/>
+<circle cx="1138.6" cy="437.6" r="2.2" fill="#b5634a" stroke="none"/>
+<circle cx="1141.4" cy="437.6" r="2.2" fill="#b5634a" stroke="none"/>
+</g>
+<g fill="#b5634a">
+  <circle cx="330" cy="1390" r="5"/><circle cx="360" cy="1415" r="3.5"/>
+  <circle cx="1220" cy="530" r="5"/><circle cx="1195" cy="505" r="3.5"/>
+</g>
+<g transform="translate(750.0 1352) scale(0.5)" fill="none" stroke="#b5634a" stroke-width="1.6"><path d="M0 0 C -12 -22.5 -10 -40.0 0 -50 C 10 -40.0 12 -22.5 0 0 Z" transform="rotate(0)"/><path d="M0 0 C -12 -18.900000000000002 -10 -33.6 0 -42 C 10 -33.6 12 -18.900000000000002 0 0 Z" transform="rotate(-30)"/><path d="M0 0 C -12 -18.900000000000002 -10 -33.6 0 -42 C 10 -33.6 12 -18.900000000000002 0 0 Z" transform="rotate(30)"/><path d="M0 0 C -12 -13.5 -10 -24.0 0 -30 C 10 -24.0 12 -13.5 0 0 Z" transform="rotate(-62)"/><path d="M0 0 C -12 -13.5 -10 -24.0 0 -30 C 10 -24.0 12 -13.5 0 0 Z" transform="rotate(62)"/><path d="M-40 4 Q0 16 40 4"/></g>
+<line x1="750.0" y1="1395" x2="750.0" y2="1740" stroke="#b8935a" stroke-width="1.4"/>
+<rect width="1500" height="2100" filter="url(#grain)"/>
+</svg>
+<div class="c">
+  <div class="mono"><span class="a">A</span><span class="s">S</span></div>
+  <div class="ganesh">॥ श्री गणेशाय नमः ॥</div>
+  <div class="small eyebrow">Together with their families</div>
+  <div class="first f1">Abhishek</div>
+  <div class="last">Sahani</div>
+  <div class="amp">&amp;</div>
+  <div class="first">Sonali</div>
+  <div class="last">Mahato</div>
+  <div class="invite">joyfully invite you to celebrate their wedding<br/>and bless them as they begin forever</div>
+  <div class="events">
+    <div class="ev">
+      <div class="small">The Wedding</div>
+      <div class="day">Wednesday</div>
+      <div class="date">07</div>
+      <div class="month">December 2022</div>
+      <div class="time">Evening</div>
+      <div class="venue">Kalyani</div>
+    </div>
+    <div class="ev">
+      <div class="small">The Reception</div>
+      <div class="day">Friday</div>
+      <div class="date">09</div>
+      <div class="month">December 2022</div>
+      <div class="time">Evening</div>
+      <div class="venue">At their residence<br/>Rajarhat, Madanpur</div>
+    </div>
+  </div>
+</div>
+<div class="foot">
+  <div class="bless">Your presence and blessings are our greatest gift</div>
+  <div class="small">With love · Sahani &amp; Mahato families</div>
+</div>
+</div></body></html>
