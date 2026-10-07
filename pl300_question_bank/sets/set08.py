@@ -9,12 +9,12 @@ ITEMS = [
 # ---------------- P1 Get or connect to data (4)
 single("P1",
  "One Excel workbook holds 12 monthly sheets with identical layouts, and a new sheet is added each month. You need all sheets, including future ones, in one table. What should you do?",
- ["Connect to the workbook, filter the navigation table to Kind = \"Sheet\", then expand the Data column", "Connect to each sheet separately and append them", "Use the Folder connector on the workbook", "Use Transpose on the first sheet"], "A",
+ ["Filter the navigation table to Kind = \"Sheet\", then expand Data", "Connect to each sheet separately and append the twelve queries together", "Use the Folder connector pointed at the workbook's file path", "Use Transpose on the first sheet"], "A",
  "The workbook's navigation table lists every sheet. Keeping the sheet rows and expanding their Data column combines all of them, and new sheets are picked up on refresh. Connecting to sheets one by one needs editing each month. The Folder connector expects a folder of files."),
 
 single("P1",
  "The SharePoint folder connector asks for a URL. Your files are in https://contoso.sharepoint.com/sites/Finance/Shared Documents/Exports. What should you enter?",
- ["The site URL: https://contoso.sharepoint.com/sites/Finance", "The full folder URL including /Exports", "The URL of one file", "A OneDrive personal URL"], "A",
+ ["The site URL: https://contoso.sharepoint.com/sites/Finance", "The full folder URL: .../sites/Finance/Shared Documents/Exports", "The URL of one file", "A OneDrive personal URL"], "A",
  "The SharePoint folder connector expects the site root URL. It then lists all files in the site's libraries, and you filter on Folder Path to the Exports folder. Entering the folder or file URL fails or returns nothing."),
 
 single("P1",
@@ -41,12 +41,12 @@ single("P2",
 # ---------------- P3 Transform and load (5)
 single("P3",
  "Twenty CSV sources need the same 15 cleaning steps. You want to define the steps once and apply them to each source. What should you create?",
- ["A custom function (Create Function from a query), then Invoke Custom Function on each source", "Twenty duplicated queries", "A calculation group", "A DAX calculated table"], "A",
+ ["A custom function, invoked on each source", "Twenty duplicated queries, one per CSV source", "A calculation group with one item per source", "A DAX calculated table"], "A",
  "A Power Query function wraps the steps with a parameter, such as a file path or table, and can be invoked for every source, so changes are made once. Duplicated queries repeat the logic twenty times. Calculation groups and DAX tables can't run Power Query steps."),
 
 single("P3",
  "A Tickets table has a Status column (Open, Pending, Closed). You need one row per Team with a column per status holding the number of tickets. Which transformation should you use?",
- ["Pivot the Status column, with TicketID as the values and the aggregation set to Count", "Unpivot the Status column", "Transpose the table", "Merge Tickets with itself"], "A",
+ ["Pivot the Status column, counting TicketID", "Unpivot the Status column into attribute-value pairs", "Transpose the table", "Merge Tickets with itself"], "A",
  "Pivot turns each status into a column, and counting TicketID gives the number of tickets per team and status. Unpivot does the reverse. Transpose rotates the whole table. Merge joins tables."),
 
 single("P3",
@@ -71,17 +71,17 @@ order("P3",
 # ---------------- M1 Design and implement a model (4)
 single("M1",
  "A fact table has eight low-cardinality Yes/No flag columns (IsOnline, IsPromo, IsGift…), and authors find them cluttered. Which modelling pattern groups them efficiently?",
- ["A junk dimension holding the distinct flag combinations, related to the fact by one key", "A separate dimension table per flag", "Calculated columns in a Flags table", "Hiding all the flags"], "A",
+ ["A junk dimension of the distinct flag combinations", "A separate dimension table for each of the eight flags", "Calculated columns in a Flags table", "Hiding all the flags"], "A",
  "A junk dimension collects unrelated low-cardinality attributes into one small table of their combinations, so the fact only needs one key. Eight separate dimensions add relationships. Hiding them removes useful slicing."),
 
 single("M1",
  "Sales has an OrderNumber column used only to identify orders and to drill to order detail. Should you create an Order dimension for it?",
- ["No. Keep OrderNumber in the fact table as a degenerate dimension.", "Yes. Every column must move to a dimension.", "Yes, with a many-to-many relationship", "No. Delete the column."], "A",
+ ["No. Keep it in the fact table as a degenerate dimension.", "Yes. Every descriptive column must move to a dimension table.", "Yes, related to Sales with a many-to-many relationship", "No. Delete the column."], "A",
  "An identifier with no other attributes belongs in the fact as a degenerate dimension. A separate table would just duplicate the column and add a relationship. Deleting it removes drill capability."),
 
 single("M1",
  "A Store table has Latitude and Longitude columns. Map visuals must place stores exactly at those coordinates. What should you set?",
- ["Data category Latitude and Longitude on the respective columns, and use them in the map's Latitude and Longitude wells", "Data category City on both columns", "Summarize by Sum", "A hierarchy of the two columns"], "A",
+ ["Data category Latitude and Longitude on the respective columns", "Data category City on both columns, placed in the map's Location well", "Summarize by Sum", "A hierarchy of the two columns"], "A",
  "Categorising the columns as Latitude and Longitude and placing them in those wells plots exact coordinates without geocoding. City categories would make Bing interpret numbers as place names. Coordinates should not be summed."),
 
 single("M1",
@@ -92,8 +92,8 @@ single("M1",
 # ---------------- M2 DAX (5 + 1 in case)
 single("M2",
  "A calculation group's YTD item must not apply to the Margin % measure, which should be returned unchanged. Which item expression should you use?",
- ["IF ( SELECTEDMEASURENAME () = \"Margin %\", SELECTEDMEASURE (), CALCULATE ( SELECTEDMEASURE (), DATESYTD ( 'Date'[Date] ) ) )", "CALCULATE ( [Margin %], DATESYTD ( 'Date'[Date] ) )", "SELECTEDMEASURE () * 0", "IF ( ISBLANK ( SELECTEDMEASURE () ), BLANK () )"], "A",
- "SELECTEDMEASURENAME returns the name of the measure being evaluated, so the item can skip Margin % and apply YTD to everything else. Hard-coding a measure breaks the item for every other measure. The other expressions don't implement YTD."),
+ ["IF ( SELECTEDMEASURENAME () = \"Margin %\", SELECTEDMEASURE (), CALCULATE ( SELECTEDMEASURE (), DATESYTD ( 'Date'[Date] ) ) )", "CALCULATE ( [Margin %], DATESYTD ( 'Date'[Date] ) )", "IF ( SELECTEDMEASURENAME () = \"Margin %\", CALCULATE ( SELECTEDMEASURE (), DATESYTD ( 'Date'[Date] ) ), SELECTEDMEASURE () )", "IF ( ISBLANK ( SELECTEDMEASURE () ), BLANK () )"], "A",
+ "SELECTEDMEASURENAME returns the name of the measure being evaluated, so the item can skip Margin % and apply YTD to everything else. Hard-coding a measure breaks the item for every other measure. Swapping the IF branches applies YTD only to Margin %, and the ISBLANK test doesn't implement YTD."),
 
 single("M2",
  "You need a calculated column on Customer that ranks each customer by lifetime sales across all customers (1 = highest). Which expression is correct?",
@@ -107,23 +107,23 @@ single("M2",
 
 single("M2",
  "Which measure returns the quantity-weighted average selling price?",
- ["DIVIDE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] ), SUM ( Sales[Quantity] ) )", "AVERAGE ( Sales[UnitPrice] )", "AVERAGEX ( Sales, Sales[UnitPrice] )", "SUM ( Sales[UnitPrice] ) / COUNTROWS ( Sales )"], "A",
- "A weighted average divides total revenue by total quantity, so lines with more units count more. The other expressions give each order line equal weight, whatever its quantity."),
+ ["DIVIDE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] ), SUM ( Sales[Quantity] ) )", "AVERAGE ( Sales[UnitPrice] )", "AVERAGEX ( Sales, Sales[UnitPrice] )", "DIVIDE ( SUMX ( Sales, Sales[Quantity] * Sales[UnitPrice] ), COUNTROWS ( Sales ) )"], "A",
+ "A weighted average divides total revenue by total quantity, so lines with more units count more. AVERAGE and AVERAGEX give each order line's price equal weight, whatever its quantity, and dividing revenue by the row count gives revenue per line, not price per unit."),
 
 single("M2",
  "A disconnected Band table has Band, Min and Max columns (Low 0–1,000, Mid 1,000–10,000, High 10,000+). A measure must count customers whose sales fall in the band on each row of a visual. Which expression is correct?",
- ["COUNTROWS ( FILTER ( VALUES ( Customer[CustomerKey] ), [Total Sales] >= MIN ( Band[Min] ) && [Total Sales] < MAX ( Band[Max] ) ) )", "COUNTROWS ( Band )", "CALCULATE ( COUNTROWS ( Customer ), Band[Min] > 0 )", "DISTINCTCOUNT ( Band[Band] )"], "A",
- "Dynamic segmentation iterates customers, evaluates each one's sales, and keeps those within the current band's bounds, which come from the band row in the visual. Counting the Band table or filtering it doesn't evaluate customers."),
+ ["COUNTROWS ( FILTER ( VALUES ( Customer[CustomerKey] ), [Total Sales] >= MIN ( Band[Min] ) && [Total Sales] < MAX ( Band[Max] ) ) )", "COUNTROWS ( Band )", "COUNTROWS ( FILTER ( Customer, SUM ( Sales[Amount] ) >= MIN ( Band[Min] ) && SUM ( Sales[Amount] ) < MAX ( Band[Max] ) ) )", "DISTINCTCOUNT ( Band[Band] )"], "A",
+ "Dynamic segmentation iterates customers, evaluates each one's sales, and keeps those within the current band's bounds, which come from the band row in the visual. SUM inside FILTER has no context transition, so it tests the same total for every customer rather than each customer's own sales. Counting the Band table or its bands doesn't evaluate customers."),
 
 # ---------------- M3 Optimize (2)
 single("M3",
  "A model loads ten years of transactions, but every report shows only the last two years, and the business confirms older data isn't needed. What is the most effective way to reduce model size?",
- ["Filter the query in Power Query to keep only the last two years", "Add a page filter for the last two years", "Hide old rows in each visual", "Create a measure that ignores old dates"], "A",
+ ["Filter the query in Power Query to the last two years", "Add a report-level filter that keeps only the last two years", "Hide old rows in each visual", "Create measures that ignore dates older than two years"], "A",
  "Removing unnecessary rows at load cuts memory and refresh time. Report filters and measures still leave all ten years in the model. Pair this with a rolling date filter or incremental refresh so the window moves forward."),
 
 single("M3",
  "A table visual lists every transaction (over a million rows) with eight columns, and the page is slow to render. Users only ever look at recent, filtered subsets. What is the best fix?",
- ["Add filters (such as a recent-date filter or required selection) so the visual returns far fewer rows", "Add more columns", "Change the theme", "Turn off totals only"], "A",
+ ["Add filters so the visual returns far fewer rows", "Add more columns", "Change the theme", "Turn off totals and keep the visual otherwise unchanged"], "A",
  "Huge row counts in table visuals are expensive to query and render. Limiting the rows returned, by filtering or requiring a selection first, solves both. Turning off totals helps a little at best."),
 
 # ---------------- V1 Create reports (5)
@@ -135,17 +135,17 @@ single("V1",
 
 single("V1",
  "A narrative visual with Copilot summarises the whole page, but executives want it to describe only the three KPI visuals at the top. What should you do?",
- ["In the narrative visual's settings, choose to summarise selected visuals and pick the three", "Delete the other visuals", "Use a text box instead", "Move the KPIs to a dashboard"], "A",
+ ["Scope the visual to summarise selected visuals", "Delete the other visuals from the page", "Replace it with a text box that describes the KPIs", "Move the KPIs to a dashboard"], "A",
  "The Copilot narrative visual can summarise the entire report, the current page or selected visuals, so you can scope it to the three KPIs. Removing visuals or switching to static text loses functionality."),
 
 single("V1",
  "A chart must show monthly revenue as columns and margin % as a line, each on its own axis scale. Which visual should you use?",
- ["Line and clustered column chart, with margin % on the secondary axis", "Stacked area chart", "Two separate pie charts", "Clustered bar chart only"], "A",
+ ["Line and clustered column chart with a secondary axis", "Stacked area chart", "Two separate pie charts", "Clustered column chart with both measures on one axis"], "A",
  "Combo charts plot columns and a line together, and a secondary Y-axis lets a percentage share the chart with currency values. The other visuals can't show both measures on different scales together."),
 
 single("V1",
  "A slicer must let users pick a year and then expand it to pick individual months within that year, in one control. What should you do?",
- ["Add Year and Month (or a date hierarchy) to the slicer's field well to make a hierarchy slicer", "Use two unsynced slicers", "Use a relative date slicer", "Use a between date slicer"], "A",
+ ["Make a hierarchy slicer with Year and Month", "Use two slicers, one for Year and one for Month", "Use a relative date slicer", "Use a between date slicer on the Date column"], "A",
  "Adding several levels to a slicer creates a hierarchy slicer with expandable levels. Two separate slicers work but aren't one control. Relative and between date slicers select ranges, not a hierarchy."),
 
 match("V1",
@@ -166,17 +166,17 @@ single("V2",
 
 single("V2",
  "A report-page tooltip about product categories must appear automatically on every visual that uses Product[Category], without configuring each visual. What should you do on the tooltip page?",
- ["Add Product[Category] to the tooltip page's Tooltip fields well", "Set each visual's tooltip to Default", "Hide the tooltip page", "Create a bookmark"], "A",
+ ["Add Product[Category] to its Tooltip fields well", "Set the Tooltip option to Default on each visual that uses Category", "Hide the tooltip page", "Create a bookmark"], "A",
  "Fields in the tooltip page's Tooltip fields well make the page appear automatically on any visual that uses those fields. Visuals left on Auto pick it up. Setting Default turns the custom page off. Hiding the page has no effect on tooltips."),
 
 single("V2",
  "When users drill down from Year to Quarter in a column chart, other visuals on the page don't change. They should be filtered to the drilled-into year. What should you configure?",
- ["Format ribbon → Interactions → turn on Drilling filters other visuals", "Edit interactions to None", "Sync slicers", "A drillthrough page"], "A",
+ ["Turn on Drilling filters other visuals", "Set Edit interactions to None for the chart", "Sync slicers", "A drillthrough page"], "A",
  "The Drilling filters other visuals option makes a drill-down action filter the other visuals on the page. It's off by default for some visuals. Setting interactions to None stops filtering altogether."),
 
 single("V2",
  "A report is always saved by authors on whichever page they were last editing, so readers open it on random pages. Readers must always land on the Overview page. What is the simplest fix?",
- ["Make Overview the active page when you save and publish the report", "Hide every other page", "Create a bookmark navigator", "Use persistent filters"], "A",
+ ["Save and publish with Overview as the active page", "Hide every other page", "Add a bookmark navigator with Overview as its first bookmark", "Use persistent filters"], "A",
  "The service opens a report on the page that was active when it was saved and published. Ending authoring on Overview fixes the landing page. Hiding pages removes them from navigation. Bookmark navigators and persistent filters don't control the landing page."),
 
 yesno("V2",
@@ -189,39 +189,39 @@ yesno("V2",
 # ---------------- V3 Patterns and trends (2 + 1 in case)
 single("V3",
  "You can't find the Find anomalies option for a column chart of daily orders. What should you change?",
- ["Use a line chart with a continuous date axis", "Add a legend", "Use a pie chart", "Turn on data labels"], "A",
- "Anomaly detection is available for line charts with a time series on a continuous axis. Column charts, legends and labels don't enable it."),
+ ["Use a line chart with a continuous date axis", "Add a legend", "Use a pie chart", "Switch the X-axis to categorical in the column chart"], "A",
+ "Anomaly detection is available for line charts with a time series on a continuous axis. Column charts, legends and a categorical axis don't enable it."),
 
 single("V3",
  "The service-level target is that 95% of tickets close within 48 hours. A line chart of the weekly on-time rate must show the target as a horizontal reference. What should you add?",
- ["A constant line at 0.95 from the Analytics pane", "An average line", "A trend line", "A forecast"], "A",
+ ["A constant line at 0.95", "An average line from the Analytics pane", "A trend line on the weekly on-time rate", "A forecast"], "A",
  "A constant line marks a fixed value, such as a target, that doesn't change with the data. An average line moves with the data. Trend lines and forecasts describe the data's direction."),
 
 # ---------------- S1 Workspaces and assets (3 + 1 in case)
 single("S1",
  "Analysts outside the Finance workspace can't find the endorsed Finance semantic model in the OneLake catalog to request access. What should you configure on the model?",
- ["Make the endorsed model discoverable, so users without access can find it and request access", "Publish it to the web", "Move it to My workspace", "Remove its endorsement"], "A",
+ ["Make the endorsed model discoverable", "Publish it to the web", "Move it to My workspace", "Remove its endorsement so it shows in search"], "A",
  "Discoverability lets users who don't have access see that an endorsed item exists and request access. Publish to web makes it public. Moving it or removing endorsement makes discovery harder."),
 
 single("S1",
  "Users requesting access to a workspace's content should reach the BI team's distribution list rather than individual admins. What should you configure?",
- ["The workspace's Contact list in workspace settings", "A data alert", "The app's theme", "A deployment rule"], "A",
+ ["The workspace contact list", "A data alert", "The app's theme", "A deployment rule in the pipeline"], "A",
  "The workspace contact list determines who receives notifications and requests about the workspace. Data alerts, themes and deployment rules don't route access requests."),
 
 single("S1",
  "A newly published app must appear automatically for every member of the Sales security group, without them looking for it under Apps. What should you do?",
- ["When publishing the app, turn on the option to install it automatically for the audience (allowed by a tenant setting)", "Send everyone the workspace URL", "Add everyone as workspace Viewers", "Use Publish to web"], "A",
+ ["Turn on automatic install for the app audience", "Share the workspace URL with the Sales group by email", "Add the Sales group to the workspace as Viewers", "Use Publish to web"], "A",
  "Push-installed apps appear in users' app lists automatically, if the tenant allows pushing apps. Workspace access gives a different experience and exposes all content. Publish to web is public."),
 
 # ---------------- S2 Secure and govern (4)
 single("S2",
  "Users belong to a Region role (filters Region) and a Product role (filters Category). They see the union of both roles' rows, but the business requires the intersection (their region and their category only). What should you do?",
- ["Create one role whose filters cover both Region and Category, and assign users only to it", "Assign users to both roles and set role precedence", "Use bidirectional relationships", "Remove RLS and use page filters"], "A",
+ ["Create one role filtering both Region and Category", "Assign users to both roles and set role precedence", "Use bidirectional relationships", "Remove RLS and use page filters"], "A",
  "Membership in several roles is additive, which gives a union. To require both conditions, the filters must be in the same role, where filters on different tables combine as an intersection. Roles have no precedence setting."),
 
 single("S2",
  "You're publishing a workspace app. App users must also be able to build their own reports on the app's semantic models. What can you do as part of publishing?",
- ["In the app's permissions, allow app users to build content with the underlying semantic models (grant Build)", "Give app users the workspace Admin role", "Use Publish to web", "Turn on persistent filters"], "A",
+ ["Grant app users Build permission on the semantic models", "Give app users the workspace Admin role", "Use Publish to web", "Turn on persistent filters so users can save their views"], "A",
  "App settings can grant Build permission on the underlying semantic models to everyone with app access, so they can create their own reports. Workspace Admin is far more access than needed. The other options don't grant Build."),
 
 single("S2",
@@ -231,7 +231,7 @@ single("S2",
 
 single("S2",
  "Policy says users may lower a report's sensitivity label (for example from Confidential to General) only if they explain why. What should be configured?",
- ["A label policy setting that requires justification to remove a label or lower its classification", "Certification of the report", "An app audience", "A data alert"], "A",
+ ["A label policy that requires justification", "Certification of the report by a Fabric admin", "An app audience restricted to label owners", "A data alert"], "A",
  "Purview label policies can require users to provide a justification when they lower a classification or remove a label, and the action is audited. Certification, audiences and alerts are unrelated."),
 
 # ---------------- Case study (P2, M2, V3, S1)
@@ -248,15 +248,15 @@ case("Proseware Telecom",
    "Text.Select keeps only the characters in the given list, here the digits, removing spaces, brackets, dashes and plus signs. Text.Remove would remove the digits instead. Trim handles spaces only. Number.From fails on the formatting characters."),
   single("M2",
    "Which measure counts customers active at the start of the selected period? The Date table doesn't filter Customer.",
-   ["VAR S = MIN ( 'Date'[Date] ) RETURN COUNTROWS ( FILTER ( Customer, Customer[StartDate] < S && ( ISBLANK ( Customer[ChurnDate] ) || Customer[ChurnDate] >= S ) ) )", "COUNTROWS ( Customer )", "CALCULATE ( COUNTROWS ( Customer ), ISBLANK ( Customer[ChurnDate] ) )", "DISTINCTCOUNT ( Customer[StartDate] )"], "A",
-   "The period start comes from the Date selection, and a customer was active then if they started before it and had not churned before it. COUNTROWS(Customer) counts everyone. Counting customers with a blank churn date gives today's active base, not the base at the start of the period."),
+   ["VAR S = MIN ( 'Date'[Date] ) RETURN COUNTROWS ( FILTER ( Customer, Customer[StartDate] < S && ( ISBLANK ( Customer[ChurnDate] ) || Customer[ChurnDate] >= S ) ) )", "COUNTROWS ( Customer )", "CALCULATE ( COUNTROWS ( Customer ), ISBLANK ( Customer[ChurnDate] ) )", "VAR S = MAX ( 'Date'[Date] ) RETURN COUNTROWS ( FILTER ( Customer, Customer[StartDate] < S && ( ISBLANK ( Customer[ChurnDate] ) || Customer[ChurnDate] >= S ) ) )"], "A",
+   "The period start comes from the Date selection, and a customer was active then if they started before it and had not churned before it. Using MAX tests the end of the period instead. COUNTROWS(Customer) counts everyone. Counting customers with a blank churn date gives today's active base, not the base at the start of the period."),
   single("V3",
    "How should you show churn by tenure bucket?",
-   ["Create bins on TenureMonths with a bin size of 6, and plot churn rate by the bins", "Create clusters on TenureMonths", "Add a forecast on tenure", "Use a gauge per bucket"], "A",
+   ["Create bins of size 6 on TenureMonths", "Create clusters on TenureMonths", "Add a forecast on tenure in six-month steps", "Use a gauge per bucket"], "A",
    "Bins of size 6 turn tenure into equal six-month buckets, which a column chart can show against churn rate. Clustering finds groups on a scatter chart. Forecasts project time series. Gauges show single values."),
   single("S1",
    "How do you meet the Teams requirement?",
-   ["Add the report as a tab in the leadership Teams channel (or share the app in Teams)", "Email the .pbix to executives", "Use Publish to web and post the link", "Export the report to PDF weekly"], "A",
+   ["Add the report as a tab in the leadership Teams channel", "Email the .pbix to executives", "Use Publish to web and post the link in the channel", "Export the report to PDF weekly and post it in the channel"], "A",
    "Power BI reports can be added as tabs in Teams channels, respecting each user's Power BI permissions, and apps can be opened in the Power BI app for Teams. Emailing files, public links or PDFs lose interactivity, governance, or both."),
  ]),
 ]

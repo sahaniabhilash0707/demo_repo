@@ -9,12 +9,12 @@ ITEMS = [
 # ---------------- P1 Get or connect to data (4)
 single("P1",
  "A supplier sends a monthly price list as a PDF containing a formatted table. You need the table in Power BI. Which connector should you use?",
- ["PDF, then select the detected table in the Navigator", "Text/CSV", "Web", "Blank query"], "A",
+ ["PDF, then pick the table in the Navigator", "Text/CSV, with the delimiter set to a tab", "Web", "Blank query with the table typed in"], "A",
  "The PDF connector detects tables and pages in a PDF and lets you choose one in the Navigator. Text/CSV and Web expect other formats. A blank query would require typing the data."),
 
 single("P1",
  "An Excel workbook is stored in OneDrive for Business. Scheduled refresh in the service must not need a gateway. How should you connect in Power BI Desktop?",
- ["Use the file's OneDrive/SharePoint web URL (Web connector or the SharePoint connectors), not the local synced path", "Use the C:\\Users\\…\\OneDrive path with the Excel connector", "Copy the file to a network share", "Email the file to yourself each month"], "A",
+ ["Use the file's OneDrive/SharePoint web URL", "Use the C:\\Users\\…\\OneDrive path with the Excel connector", "Copy the file to a network share", "Email the file to yourself each month"], "A",
  "Connecting through the cloud URL lets the service read the file directly, so no gateway is needed. A local synced path is an on-premises file path in the service's eyes and needs a gateway. Network shares also need one."),
 
 multi("P1",
@@ -24,18 +24,18 @@ multi("P1",
 
 single("P1",
  "A report is live-connected to a published semantic model. An author wants to add a calculated column. Which statement is correct?",
- ["In a live connection you can add report-level measures, but not calculated columns or tables; to add them, use a composite model or change the source model", "Calculated columns can be added freely in a live connection", "Nothing can be added in a live connection", "Calculated columns are added automatically to the shared model"], "A",
+ ["Only report-level measures can be added, not columns", "Calculated columns can be added freely in a live connection", "Nothing can be added in a live connection", "Calculated columns are added automatically to the shared model"], "A",
  "Live-connected reports have no local model, so only report-level measures are allowed. Adding columns or tables needs either a composite model (Make changes to this model) or a change by the model's owner."),
 
 # ---------------- P2 Profile and clean (3)
 single("P2",
  "Refresh fails with \"Expression.Error: The column 'Region' of the table wasn't found\". What has most likely happened?",
- ["The source column was renamed or removed, and a step still refers to the old name", "The gateway is offline", "Region contains null values", "The model has an RLS role on Region"], "A",
+ ["A source column was renamed or removed", "The gateway is offline, so the source can't be read", "Region contains null values", "The model has an RLS role on Region"], "A",
  "Power Query steps refer to columns by name. When the source renames or drops a column, the first step that references it fails with this error. Fix the step, or make the query resilient with Choose columns or a rename map. Nulls and RLS don't cause this error."),
 
 single("P2",
  "In an order-lines source, a null Quantity means the line was entered without units. The business says these should be treated as 0. Where and how should you fix this?",
- ["In Power Query, use Replace values to replace null with 0 in Quantity", "In each visual, set Show items with no data", "In DAX, wrap every measure in IF(ISBLANK())", "Delete the rows"], "A",
+ ["In Power Query, replace null with 0", "In each visual, set Show items with no data", "In DAX, wrap every measure in IF(ISBLANK())", "Delete the rows with a null Quantity"], "A",
  "Applying the business rule once at load means every measure and visual agrees. Fixing it in each measure or visual is repetitive and error-prone. Deleting rows loses data the business wants kept."),
 
 single("P2",
@@ -47,13 +47,13 @@ single("P2",
 # ---------------- P3 Transform and load (4 + 1 in case)
 single("P3",
  "A merge must match supplier names such as \"IBM\" to \"International Business Machines\". The data team keeps a two-column list of known equivalents. What should you use?",
- ["Fuzzy matching in the merge, with the list supplied as a transformation table", "A Left anti join", "Remove duplicates", "Group by supplier name"], "A",
+ ["Fuzzy merge with a transformation table", "A Left anti join against the list of equivalents", "Remove duplicates", "Group by supplier name and keep the first row"], "A",
  "A transformation table maps known values to their equivalents during a fuzzy merge, handling cases that similarity alone can't. Anti joins find non-matches. Removing duplicates and grouping don't pair different spellings."),
 
 single("P3",
  "You need an OrderSequence column numbering each customer's orders in date order (1 for their first order, 2 for the second, and so on). What is a correct Power Query approach?",
- ["Sort by CustomerID and OrderDate, group by CustomerID with All rows, add an index column starting at 1 inside each nested table, then expand", "Add one index column to the whole table", "Pivot OrderDate", "Merge the table with itself on OrderDate"], "A",
- "Grouping keeps each customer's rows in a nested table, and an index added inside each table restarts at 1 per customer. A single index column numbers all rows continuously. Pivoting and self-merging don't produce sequences."),
+ ["Sort by OrderDate, group by CustomerID (All rows), and index each group", "Sort by CustomerID and OrderDate, then add one index column to the whole table", "Pivot OrderDate", "Merge the table with itself on OrderDate"], "A",
+ "Grouping keeps each customer's rows in a nested table, and an index added inside each table restarts at 1 per customer. A single index column numbers all rows continuously, even after sorting. Pivoting and self-merging don't produce sequences."),
 
 match("P3",
  "Match each query to the load setting it should have.",
@@ -72,17 +72,17 @@ single("P3",
 # ---------------- M1 Design and implement a model (4)
 single("M1",
  "An Employee table has EmployeeID and ManagerID, a parent-child hierarchy of up to four levels. Users want a Level 1 to Level 4 hierarchy in a matrix. What should you do?",
- ["Create a Path column with PATH, then Level1–Level4 calculated columns with PATHITEM (and LOOKUPVALUE for names), and build a hierarchy from them", "Create a many-to-many relationship from Employee to itself", "Set the relationship to Both", "Use a calculation group"], "A",
+ ["Use PATH and PATHITEM to build Level1–Level4 columns", "Create a many-to-many relationship from Employee to itself", "Set the relationship to Both", "Use a calculation group with one item per level"], "A",
  "Power BI hierarchies need one column per level. PATH flattens the parent-child chain, and PATHITEM extracts each level, which you can then turn into a hierarchy. Self-relationships and calculation groups don't flatten a parent-child structure."),
 
 single("M1",
  "Users must slice customers by the year of their first purchase. Which object should you create in the Customer table?",
- ["A calculated column: FirstPurchaseDate = CALCULATE ( MIN ( Sales[OrderDate] ) ), with a year column derived from it", "A measure: MIN ( Sales[OrderDate] )", "A visual calculation", "A what-if parameter"], "A",
+ ["A calculated column using CALCULATE ( MIN ( Sales[OrderDate] ) )", "A measure: CALCULATE ( MIN ( Sales[OrderDate] ), ALLEXCEPT ( Sales, Sales[CustomerKey] ) )", "A visual calculation on a table of customers", "A what-if parameter"], "A",
  "Slicers need column values. A calculated column evaluates each customer's first purchase date through context transition, and a year column can be derived from it. A measure can't be placed on a slicer. Visual calculations and what-if parameters don't create customer attributes."),
 
 single("M1",
  "The fiscal year starts in April. Month names in visuals must run April, May … March. What should you do?",
- ["Add a FiscalMonthNumber column (April = 1 … March = 12) and set MonthName to sort by it", "Sort MonthName alphabetically", "Sort MonthName by MonthNumber (January = 1)", "Rename the months with numbers"], "A",
+ ["Sort MonthName by a fiscal month number", "Sort MonthName alphabetically", "Sort MonthName by MonthNumber (January = 1)", "Rename the months with numbers"], "A",
  "Sort by column applies the order of another column. A fiscal month number puts April first. Sorting by the calendar month number starts with January. Alphabetical sorting is wrong in both cases."),
 
 yesno("M1",
@@ -95,8 +95,8 @@ yesno("M1",
 # ---------------- M2 DAX (5 + 1 in case)
 single("M2",
  "You need a cumulative (all-time running) sales total that ends at the last date in the current filter context. Which measure is correct?",
- ["CALCULATE ( [Total Sales], FILTER ( ALL ( 'Date'[Date] ), 'Date'[Date] <= MAX ( 'Date'[Date] ) ) )", "TOTALYTD ( [Total Sales], 'Date'[Date] )", "SUM ( Sales[Amount] )", "CALCULATE ( [Total Sales], ALL ( 'Date' ) )"], "A",
- "Removing the date filter and keeping every date up to the current maximum gives an all-time running total. TOTALYTD resets each year. A plain SUM is limited to the current period. ALL('Date') returns the all-time total on every row."),
+ ["CALCULATE ( [Total Sales], FILTER ( ALL ( 'Date'[Date] ), 'Date'[Date] <= MAX ( 'Date'[Date] ) ) )", "TOTALYTD ( [Total Sales], 'Date'[Date] )", "CALCULATE ( [Total Sales], FILTER ( ALL ( 'Date'[Date] ), 'Date'[Date] <= MIN ( 'Date'[Date] ) ) )", "CALCULATE ( [Total Sales], ALL ( 'Date' ) )"], "A",
+ "Removing the date filter and keeping every date up to the current maximum gives an all-time running total. TOTALYTD resets each year. Using MIN ends the total at the first date in the current context rather than the last. ALL('Date') returns the all-time total on every row."),
 
 single("M2",
  "Sales[ProductKey] contains some blanks for unmatched lines. A measure must count the distinct products sold, excluding the blank. Which function should you use?",
@@ -105,8 +105,8 @@ single("M2",
 
 single("M2",
  "A Rates table has one row per Date and Currency, with a Rate column. In the Sales table, a calculated column must fetch the rate for each row's OrderDate and Currency. There is no relationship on both columns. Which expression is correct?",
- ["LOOKUPVALUE ( Rates[Rate], Rates[Date], Sales[OrderDate], Rates[Currency], Sales[Currency] )", "RELATED ( Rates[Rate] )", "SUM ( Rates[Rate] )", "VALUES ( Rates[Rate] )"], "A",
- "LOOKUPVALUE returns the value from the row that matches every search condition, which works without a relationship. RELATED needs a relationship. SUM and VALUES ignore the row's date and currency."),
+ ["LOOKUPVALUE ( Rates[Rate], Rates[Date], Sales[OrderDate], Rates[Currency], Sales[Currency] )", "RELATED ( Rates[Rate] )", "LOOKUPVALUE ( Rates[Rate], Rates[Date], MAX ( Sales[OrderDate] ), Rates[Currency], Sales[Currency] )", "VALUES ( Rates[Rate] )"], "A",
+ "LOOKUPVALUE returns the value from the row that matches every search condition, which works without a relationship. RELATED needs a relationship. MAX ( Sales[OrderDate] ) returns the latest order date in the table, not the row's own date. VALUES ignores the row's date and currency."),
 
 single("M2",
  "Finance wants the spend of a typical customer, unaffected by a few very large accounts. Which measure fits?",
@@ -126,7 +126,7 @@ match("M2",
 # ---------------- M3 Optimize (2)
 single("M3",
  "A 100-million-row Sales table has 12 calculated columns that use RELATED to copy attributes from Product and Customer. The model is large and refresh is slow. What should you do?",
- ["Remove the copied columns and use the attributes from the dimension tables through the existing relationships", "Add more calculated columns", "Set the relationships to Both", "Switch Product to DirectQuery"], "A",
+ ["Remove the copied columns", "Add more calculated columns", "Set the Product and Customer relationships to Both", "Switch Product and Customer to DirectQuery storage"], "A",
  "Copying dimension attributes onto a huge fact table duplicates data at the fact's row count. The relationships already let visuals use the dimension columns directly, so removing the copies shrinks the model and speeds up refresh."),
 
 single("M3",
@@ -137,7 +137,7 @@ single("M3",
 # ---------------- V1 Create reports (5)
 single("V1",
  "A visual calculation must use Product[ListPrice], which isn't currently in the matrix. What should you do?",
- ["Add ListPrice to the visual (you can hide it from display), then reference it in the visual calculation", "Use RELATED ( Product[ListPrice] ) in the visual calculation", "Create a calculated column", "Visual calculations can reference any model column directly"], "A",
+ ["Add ListPrice to the visual, hidden if needed", "Use RELATED ( Product[ListPrice] ) in the visual calculation", "Create a calculated column", "Visual calculations can reference any model column directly"], "A",
  "Visual calculations can reference only fields that are on the visual, but fields can be added and hidden. RELATED isn't supported in visual calculations. A calculated column doesn't put the value on the visual."),
 
 single("V1",
@@ -152,18 +152,18 @@ single("V1",
 
 single("V1",
  "A bar chart must show only the ten customers with the highest sales, and stay correct as data changes. What should you configure?",
- ["A visual-level Top N filter on Customer, by the Sales measure", "A page filter selecting ten customer names", "Sort descending and resize the chart", "A slicer"], "A",
+ ["A visual-level Top N filter by Sales", "A page filter selecting ten customer names", "Sort descending and resize the chart", "A slicer"], "A",
  "A Top N filter keeps the top N items by a measure and re-evaluates as data and other filters change. Hand-picked names go stale. Sorting doesn't limit the items, and a slicer depends on users."),
 
 single("V1",
  "A model has 80 measures with no descriptions, and Copilot gives poor results. You want descriptions added quickly, with the option to review them. What can you use?",
- ["Copilot's option to create measure descriptions from each measure's DAX, reviewing each before saving", "Performance Analyzer", "Sync slicers", "DAX query view's EVALUATE"], "A",
+ ["Copilot to draft each measure's description", "Performance Analyzer", "Sync slicers", "DAX query view, with EVALUATE over INFO.MEASURES ()"], "A",
  "Copilot can draft a description for a measure from its formula in the measure's properties, and the author reviews and keeps it. Good descriptions in turn improve Copilot's other results. The other tools don't write descriptions."),
 
 # ---------------- V2 Usability and storytelling (4 + 1 in case)
 single("V2",
  "You changed which visuals a bookmark hides, but clicking the bookmark still shows the old state. What should you do?",
- ["Select the bookmark, apply the new state on the page, then use Update on the bookmark", "Delete the page", "Rename the bookmark", "Sync the slicers"], "A",
+ ["Use Update on the bookmark", "Delete the page", "Rename the bookmark to refresh its state", "Sync the slicers"], "A",
  "Bookmarks store a snapshot. After changing the page, use the bookmark's Update command to capture the new state. Renaming doesn't change the stored state."),
 
 single("V2",
@@ -191,12 +191,12 @@ single("V3",
 
 single("V3",
  "Users type \"big orders\" in Q&A and expect orders over 10,000. Q&A doesn't understand the phrase. What should you do?",
- ["Use Teach Q&A to define \"big orders\" as orders where Amount is greater than 10,000", "Rename the Sales table Big Orders", "Add a smart narrative", "Create a bookmark"], "A",
+ ["Use Teach Q&A to define \"big orders\"", "Rename the Sales table Big Orders", "Add a smart narrative that explains the term", "Create a bookmark"], "A",
  "Teach Q&A lets you define what a term means, including conditions such as Amount > 10,000, so later questions use it. Renaming tables or adding narratives and bookmarks doesn't teach Q&A new terms."),
 
 single("V3",
  "On a scatter chart of stores, points more than three standard deviations from the mean margin must appear in red. What should you do?",
- ["Create a measure that flags outliers (a z-score above 3) and apply marker colour conditional formatting by rule (or field value) using it", "Add a forecast", "Use clustering only", "Increase the marker size"], "A",
+ ["Colour markers by rule on a z-score measure", "Add a forecast", "Use clustering to group the stores automatically", "Increase the marker size for stores with high margin"], "A",
  "Outliers can be flagged with a measure, such as a z-score using STDEV.P, and highlighted through conditional formatting of the marker colour. Forecasts and marker size don't identify outliers. Clustering groups points rather than flagging extremes."),
 
 # ---------------- S1 Workspaces and assets (3 + 1 in case)
@@ -207,7 +207,7 @@ single("S1",
 
 single("S1",
  "A Pro workspace model's scheduled refresh stopped running. Nobody has opened its reports or dashboards for over two months. What is the most likely reason?",
- ["The service pauses scheduled refresh after two months of inactivity", "Pro licences expire every month", "The gateway was deleted automatically", "The model reached 48 refreshes"], "A",
+ ["Refresh pauses after two months of inactivity", "Pro licences must be renewed by the admin every month", "The gateway was deleted automatically", "The model reached 48 refreshes"], "A",
  "Power BI deactivates refresh schedules for models whose content hasn't been used for about two months. Opening the content or re-enabling the schedule restarts it. Licences, gateways and refresh counts don't explain this pattern."),
 
 single("S1",
@@ -223,7 +223,7 @@ single("S2",
 
 single("S2",
  "Viewers of a workspace must not see a draft report that's still in development. The draft must stay with the other content during development. What is the best approach?",
- ["Distribute to consumers through an app that excludes the draft, and keep consumers out of the workspace itself", "Hide the draft report's pages", "Apply a sensitivity label to the draft", "Give consumers the Contributor role"], "A",
+ ["Publish an app that excludes the draft", "Hide the draft report's pages", "Apply a sensitivity label to the draft", "Give consumers the Contributor role"], "A",
  "Workspace Viewers see every item in the workspace. An app lets you publish only finished content to consumers. Hidden pages and labels don't hide the report. Contributor access would make it worse."),
 
 multi("S2",
@@ -233,7 +233,7 @@ multi("S2",
 
 single("S2",
  "Users find a certified semantic model in the OneLake catalog but can't open it. Why?",
- ["Certification shows trust but doesn't grant access; users still need permission on the model (they can request it)", "Certified models are always read-only to everyone", "Certification hides the data", "The model must also be promoted"], "A",
+ ["Certification doesn't grant access to the model", "Certified models are always read-only to everyone", "Certification hides the data", "The model must also be promoted"], "A",
  "Endorsement helps people find and trust content but has no effect on permissions. Access must be granted separately, often through an access request on a discoverable model."),
 
 # ---------------- Case study (P3, M2, V2, S1)
@@ -246,7 +246,7 @@ case("Alpine Ski House",
  [
   single("P3",
    "How should you turn Payload into columns?",
-   ["Select Payload, choose Transform → Parse → JSON, then expand the resulting record into snowCm and tempC and set numeric types", "Split Payload by the comma delimiter", "Use Column from examples on Payload", "Unpivot Payload"], "A",
+   ["Transform → Parse → JSON, then expand the record", "Split Payload by the comma delimiter, then by the colon", "Use Column from examples on Payload", "Unpivot Payload"], "A",
    "Parse JSON turns the text into a record, and expanding the record creates one column per field, which can then be typed. Splitting by comma breaks on nested or reordered JSON. The other options don't parse JSON."),
   single("M2",
    "Which measure returns season-to-date revenue?",
@@ -254,11 +254,11 @@ case("Alpine Ski House",
    "The year-end-date argument makes the accumulation year end on 30 April, so the year runs 1 May to 30 April and covers each full November–April season. Without it, the year resets in January, mid-season. MTD and SAMEPERIODLASTYEAR answer other questions."),
   single("V2",
    "How do you build the map hover experience?",
-   ["Create a report page tooltip with the 30-day snow chart, and set the map's tooltip to that page", "Add snow depth to the map's size", "Create a drillthrough page", "Use a bookmark"], "A",
+   ["A report page tooltip set on the map", "Add snow depth to the map's bubble size", "A drillthrough page with the 30-day snow chart", "A bookmark"], "A",
    "A report page tooltip shows a small custom page, here a trend chart, when users hover over a visual, filtered to the hovered resort. Drillthrough needs a click and navigates away. Size encoding and bookmarks don't show a trend on hover."),
   single("S1",
    "How do you meet the refresh requirement?",
-   ["Configure scheduled refresh in 30-minute slots from 08:00 to 17:00. The capacity allows up to 48 refreshes a day, and the on-premises source needs a standard gateway.", "It isn't possible; the maximum is 8 refreshes a day", "Use a personal-mode gateway with 48 refreshes", "Use Publish to web"], "A",
+   ["Half-hourly scheduled refresh through a standard gateway", "It isn't possible; the maximum is 8 refreshes a day on any capacity", "Use a personal-mode gateway with 48 refreshes", "Use Publish to web"], "A",
    "On Fabric or Premium capacity, scheduled refresh allows up to 48 slots a day, so 18 half-hourly refreshes fit. The on-premises SQL Server needs a standard gateway. Eight a day is the Pro limit. A personal gateway isn't for shared production refresh."),
  ]),
 ]
