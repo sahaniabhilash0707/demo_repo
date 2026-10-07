@@ -81,6 +81,13 @@ def meter():
 </div>"""
 
 
+def dots():
+    """Two rows of sessions: mostly small wins, a few small planned losses, some days with no trade."""
+    red, flat = {5, 12, 19, 26, 33, 37}, {9, 23, 30}
+    return "".join('<u class="r"></u>' if k in red else '<u class="o"></u>' if k in flat else '<u></u>'
+                   for k in range(40))
+
+
 def html():
     return f"""<!doctype html><html><head><meta charset="utf-8"><style>
 @font-face{{font-family:'Cormorant';font-weight:500;src:url('fonts/CormorantGaramond-500.ttf');}}
@@ -101,8 +108,19 @@ h1{{font-family:'Cormorant';font-weight:600;line-height:.86;margin-top:26px;lett
 h1 .n{{font-size:360px;color:{GOLD};display:block;line-height:.78;font-variant-numeric:lining-nums;font-feature-settings:"lnum" 1}}
 h1 .w{{font-size:132px;display:block;margin-top:10px}}
 h1 em{{font-size:132px;font-style:italic;font-weight:500;color:{GREEN};display:block;margin-top:18px}}
-.lede{{font-size:34px;line-height:1.5;color:{SOFT};font-weight:300;margin-top:46px;max-width:860px}}
+.lede{{font-size:34px;line-height:1.5;color:{SOFT};font-weight:300;margin-top:40px;max-width:860px}}
 .lede b{{color:{INK};font-weight:500}}
+.singles{{margin-top:54px;padding-top:30px;border-top:1px solid {RULE};max-width:900px}}
+.sh{{font-family:'Cormorant';font-style:italic;font-weight:500;font-size:54px;color:{GREEN_L};white-space:nowrap;margin-bottom:22px}}
+.lg{{display:flex;gap:44px;margin-top:22px;font-size:15px;letter-spacing:2.5px;color:{MUTED};font-weight:500}}
+.lg span{{display:flex;align-items:center;gap:12px}}
+.lg u{{width:16px;height:16px;border-radius:50%;background:{GREEN};display:block}}
+.lg u.r{{background:{RED};transform:scale(.6)}}
+.lg u.o{{background:none;border:2px solid {MUTED}}}
+.dots{{display:grid;grid-template-columns:repeat(20,1fr);gap:16px 0;justify-items:start}}
+.dots u{{width:26px;height:26px;border-radius:50%;background:{GREEN};display:block}}
+.dots u.r{{background:{RED};transform:scale(.5)}}
+.dots u.o{{background:none;border:2px solid {MUTED}}}
 svg .cap{{font-family:'Inter';font-size:17px;letter-spacing:3.5px;font-weight:500;fill:{SOFT}}}
 svg .it{{font-family:'Cormorant';font-style:italic;font-weight:500;font-size:34px}}
 svg .big{{font-family:'Cormorant';font-style:italic;font-weight:500;font-size:56px;fill:{INK}}}
@@ -137,6 +155,9 @@ svg .soft{{fill:{SOFT}}} svg .red{{fill:{RED}}} svg .green{{fill:{GREEN_L}}} svg
     <h1><span class="n">{TARGET}</span><span class="w">points a week.</span><em>Then stop.</em></h1>
     <p class="lede">Every step away from this plan is a step toward disaster. <b>A few wins, then option buying,
       then the fall: it has happened before.</b> This is the last chance out of the rat race. Don't spend it.</p>
+    <div class="singles"><div class="sh">Singles, not sixes.</div>
+      <div class="dots">{dots()}</div>
+      <div class="lg"><span><u></u>SMALL WIN</span><span><u class="r"></u>SMALL PLANNED LOSS</span><span><u class="o"></u>NO SETUP, NO TRADE</span></div></div>
   </div>
   <div class="art">{art()}</div>
 </section>
