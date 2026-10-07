@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-"""Manual text, Part 3 and Part 4 (chapters 14-26), front matter and glossary."""
+"""Manual text, Part 3 and Part 4 (chapters 15-27), front matter and glossary."""
 
 CH = []
 
 # ============================================================== PART 3
 CH.append(dict(
-    num=14, part=3, title="Supply and Demand Zones / Order Blocks",
+    num=15, part=3, title="Supply and Demand Zones / Order Blocks",
     tagline="Where institutions bought before, they defend again.",
     concept=[
         "A <b>demand zone</b> is a small price area (a 'base' of a few quiet candles) from which price launched "
@@ -49,7 +49,7 @@ CH.append(dict(
 ))
 
 CH.append(dict(
-    num=15, part=3, title="Fair Value Gaps (Imbalances)",
+    num=16, part=3, title="Fair Value Gaps (Imbalances)",
     tagline="Price skipped a level. It usually comes back to check it.",
     concept=[
         "A <b>fair value gap (FVG)</b> is a three-candle pattern where candle 2 moves so fast that the high of "
@@ -92,7 +92,7 @@ CH.append(dict(
 ))
 
 CH.append(dict(
-    num=16, part=3, title="Wyckoff Accumulation and Distribution",
+    num=17, part=3, title="Wyckoff Accumulation and Distribution",
     tagline="Big players need a range to build a position. Learn to read the range.",
     concept=[
         "Richard Wyckoff described how large operators <b>accumulate</b> (buy) in a trading range after a fall and "
@@ -140,7 +140,7 @@ CH.append(dict(
 ))
 
 CH.append(dict(
-    num=17, part=3, title="Volume and Open Interest Confirmation",
+    num=18, part=3, title="Volume and Open Interest Confirmation",
     tagline="Price shows what happened. OI shows who did it.",
     concept=[
         "<b>Open interest (OI)</b> is the number of open futures/options contracts. Reading the <b>change in OI "
@@ -173,7 +173,7 @@ CH.append(dict(
         "<b>Options read:</b> if 26,000 CE OI jumps by 40 lakh while NIFTY is at 25,950 and 25,800 PE OI also "
         "rises, writers expect a 25,800-26,000 range. Sell outside it, not inside.",
     ],
-    trade=[("Use", "Confirmation filter for setups in Ch 21, not a standalone entry"),
+    trade=[("Use", "Confirmation filter for setups in Ch 22, not a standalone entry"),
            ("Long filter", "Long build-up or short covering into a demand zone/sweep"),
            ("Short filter", "Short build-up or long unwinding at a supply zone/sweep"),
            ("Option walls", "Highest CE OI = ceiling, highest PE OI = floor; watch intraday shifts every 30 min"),
@@ -192,7 +192,7 @@ CH.append(dict(
 ))
 
 CH.append(dict(
-    num=18, part=3, title="Candles in Context",
+    num=19, part=3, title="Candles in Context",
     tagline="A candle is a word. Location is the sentence.",
     concept=[
         "Four candles are worth knowing: the <b>pin bar</b> (long wick, small body: rejection), the <b>engulfing "
@@ -238,7 +238,7 @@ CH.append(dict(
 ))
 
 CH.append(dict(
-    num=19, part=3, title="Multi-Timeframe Alignment",
+    num=20, part=3, title="Multi-Timeframe Alignment",
     tagline="Daily for direction, 15-min for structure, 5-min for the trigger.",
     concept=[
         "Use three timeframes, each with one job. The <b>daily</b> gives bias and big zones (where are we in the "
@@ -282,7 +282,7 @@ CH.append(dict(
 ))
 
 CH.append(dict(
-    num=20, part=3, title="VWAP, PDH/PDL/PDC and CPR",
+    num=21, part=3, title="VWAP, PDH/PDL/PDC and CPR",
     tagline="Yesterday's levels and today's average are where institutions measure themselves.",
     concept=[
         "<b>VWAP</b> (volume-weighted average price) is the average price paid today, weighted by volume. "
@@ -398,7 +398,7 @@ SETUPS = [
 ]
 
 CH.append(dict(
-    num=21, part=4, title="Five A+ Setups",
+    num=22, part=4, title="Five A+ Setups",
     tagline="Fewer setups, done well, beat many setups done badly.",
     concept=[
         "Everything in Parts 1-3 reduces to a handful of repeatable trades. Each one has a <b>checklist</b> (all "
@@ -433,7 +433,7 @@ CH.append(dict(
 ))
 
 CH.append(dict(
-    num=22, part=4, title="Applying the Setups to Option Selling",
+    num=23, part=4, title="Applying the Setups to Option Selling",
     tagline="Sell where price must work hardest to reach, and leave before the gamma hour.",
     concept=[
         "Option selling is not a separate strategy; it is a different way to express the same price-action view. "
@@ -482,7 +482,7 @@ CH.append(dict(
 ))
 
 CH.append(dict(
-    num=23, part=4, title="Risk Management",
+    num=24, part=4, title="Risk Management",
     tagline="Analysis decides if you make money. Risk management decides if you stay in the game.",
     concept=[
         "<b>Risk per trade = 1% of capital.</b> At ₹2,70,000 that is <b>₹2,700</b>. <b>Daily loss limit = 2%</b> "
@@ -533,7 +533,7 @@ CH.append(dict(
 ))
 
 CH.append(dict(
-    num=24, part=4, title="Trader Psychology",
+    num=25, part=4, title="Trader Psychology",
     tagline="The market doesn't take your money. Your next trade after a loss does.",
     concept=[
         "Three psychological failures destroy small accounts: <b>revenge trading</b> (trading to win back a loss "
@@ -583,7 +583,7 @@ CH.append(dict(
 ))
 
 CH.append(dict(
-    num=25, part=4, title="The Daily Routine",
+    num=26, part=4, title="The Daily Routine",
     tagline="Amateurs trade the market. Professionals trade their routine.",
     concept=[
         "A fixed routine removes decisions from emotional moments. It has three blocks: <b>pre-market</b> "
@@ -629,7 +629,7 @@ CH.append(dict(
 ))
 
 CH.append(dict(
-    num=26, part=4, title="The One-Page Cheat Sheet",
+    num=27, part=4, title="The One-Page Cheat Sheet",
     tagline="Print it. Keep it next to the screen.",
     concept=[
         "Every trap in Part 2 and every setup in Part 4 fits in one table: what you see, what it means, and what "
@@ -683,6 +683,8 @@ CHEAT_TRAPS = [
      "Both sides' stops hunted; IV crush", "No trades ±15/30 min; trade retest of pre-event range"),
     ("Pattern / trendline fake (Ch 13)", "Perfect triangle / double top breaks quietly, then fails",
      "Pattern traders' orders harvested", "Trade the failure or the loud second break"),
+    ("20-pt overshoot (Ch 14)", "Poke 15-25 pts through a round no. on low volume, closes back",
+     "Breakout buyers + stops filled", "Enter on close back; SL poke + 10; 2R, then 100-120 pts"),
 ]
 CHEAT_SETUPS = [
     ("1 Sweep reversal", "PDH/PDL sweep + volume + reclaim", "Above/below reclaim candle", "Beyond wick",

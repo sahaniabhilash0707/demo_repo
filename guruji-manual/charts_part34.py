@@ -1,4 +1,4 @@
-"""Charts for Part 3 (ch 14-20) and Part 4 (ch 21-26)."""
+"""Charts for Part 3 (ch 15-21) and Part 4 (ch 22-27)."""
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.ticker import FuncFormatter
@@ -52,7 +52,7 @@ def c14():
     step(ax, 15, 25690, 2, UP, "Displacement: 3 big candles,\nvolume 3x = institutions buying", tx=18, ty=25662)
     step(ax, 38, 25618, 3, YEL, "Return to zone: unfilled\norders defend it", tx=41, ty=25603)
     trade(ax, 39, 25645, 25598, 25740, x1=n - 1, side="long")
-    frame(fig, ax, "Ch 14 · Demand zone and order block",
+    frame(fig, ax, "Ch 15 · Demand zone and order block",
           "5-min · A base that launched a displacement leaves unfilled buy orders behind", times(n, "10:00"),
           step=6, ax2=ax2)
     save(fig, "c14")
@@ -81,7 +81,7 @@ def c15():
     step(ax, 14, 25760, 3, MUTED, "Candle 3 low 25,768", tx=17, ty=25700)
     step(ax, 30, 25745, 4, UP, "Rebalance: price returns,\nfills orders, resumes", tx=33, ty=25722)
     trade(ax, 31, 25757, 25734, 25812, x1=n - 1, side="long", tgt2=25850)
-    frame(fig, ax, "Ch 15 · Fair value gap (imbalance)",
+    frame(fig, ax, "Ch 16 · Fair value gap (imbalance)",
           "5-min · Three-candle pattern: gap between candle 1 high and candle 3 low", times(n, "09:30"), step=6,
           ax2=ax2)
     save(fig, "c15")
@@ -118,7 +118,7 @@ def c16():
     note(ax, "Spring: break below the SC low traps\nshort sellers; closes back in range",
          (47, 25621), (24, 25612), ec=YEL)
     trade(ax, 53, 25664, 25618, 25755, x1=n - 1, side="long")
-    frame(fig, ax, "Ch 16 · Wyckoff accumulation on a 5-min chart",
+    frame(fig, ax, "Ch 17 · Wyckoff accumulation on a 5-min chart",
           "SC selling climax · AR automatic rally · ST secondary test · SOS sign of strength · LPS last point of "
           "support", times(n), step=6, ax2=ax2)
     save(fig, "c16")
@@ -146,7 +146,7 @@ def c17():
         ax.axvspan(a - 0.5, b - 0.5, color=col, alpha=0.07)
         ax2.axvspan(a - 0.5, b - 0.5, color=col, alpha=0.07)
         ax.text((a + b) / 2 - 0.5, 25822, t, color=col, fontsize=7.2, ha="center", va="top", fontweight="bold")
-    frame(fig, ax, "Ch 17 · Price + open interest: four combinations",
+    frame(fig, ax, "Ch 18 · Price + open interest: four combinations",
           "15-min, two sessions · NIFTY futures OI. Read OI change together with price, never alone", ax2=ax2)
     day_ticks(ax2, n, 25, ["Mon", "Tue"])
     save(fig, "c17")
@@ -179,7 +179,7 @@ def c18a():
     a2.set_title("Location: middle of range → IGNORE", color=DN, fontsize=9, fontweight="bold")
     for a in (a1, a2):
         a.set_xticks([])
-    _titles(fig, "Ch 18 · Same candle, different location", None)
+    _titles(fig, "Ch 19 · Same candle, different location", None)
     fig.subplots_adjust(left=0.02, right=0.93, top=0.85, bottom=0.05)
     save(fig, "c18a")
 
@@ -208,7 +208,7 @@ def c18b():
         a.set_yticks([])
         a.set_title(t, color=YEL, fontsize=9, fontweight="bold")
         a.text(1.5, 25563, cap, color=TXT, fontsize=7.2, ha="center", va="bottom")
-    _titles(fig, "Ch 18 · Four candles worth knowing (only at a level)", None, "Schematic")
+    _titles(fig, "Ch 19 · Four candles worth knowing (only at a level)", None, "Schematic")
     fig.subplots_adjust(left=0.01, right=0.99, top=0.8, bottom=0.03)
     save(fig, "c18b")
 
@@ -252,7 +252,7 @@ def c19():
     trade(a3, 11, 25624, 25586, 25680, x1=21, side="long", fs=6.6)
     a3.text(0, 25694, "5-MIN: sweep + engulfing = trigger", color=TXT, fontsize=7.6, va="top")
     a3.set_xticks([])
-    _titles(fig, "Ch 19 · Multi-timeframe alignment: daily → 15-min → 5-min",
+    _titles(fig, "Ch 20 · Multi-timeframe alignment: daily → 15-min → 5-min",
             "Higher timeframe gives direction and location; lower timeframe gives the trigger")
     fig.subplots_adjust(left=0.02, right=0.93, top=0.88, bottom=0.03)
     save(fig, "c19")
@@ -280,7 +280,7 @@ def c20():
     step(ax, 4, 25776, 1, UP, "Dip holds CPR + VWAP", tx=6, ty=25728)
     step(ax, 42, 25840, 2, YEL, "VWAP pullback holds:\nlongs defend average", tx=40, ty=25812)
     step(ax, 54, 25912, 3, ORANGE, "PDH 25,880 breaks and\nholds = buy-stops above fuel", tx=40, ty=25945)
-    frame(fig, ax, "Ch 20 · VWAP, PDH/PDL/PDC and CPR as reference levels",
+    frame(fig, ax, "Ch 21 · VWAP, PDH/PDL/PDC and CPR as reference levels",
           "5-min · Levels from yesterday tell you where the liquidity is today", times(n), step=6)
     save(fig, "c20")
 
@@ -434,7 +434,7 @@ def c22a():
     level(ax, 26000, None, MUTED, ls=":")
     note(ax, "Strike = beyond the liquidity that was\nalready swept + beyond the OI wall +\noutside the expected range",
          (12, 26150), (14, 26205), ec=DN)
-    frame(fig, ax, "Ch 22 · Strike selection: sell where price must work hardest to reach",
+    frame(fig, ax, "Ch 23 · Strike selection: sell where price must work hardest to reach",
           "5-min · Bear call spread 26,150/26,350 after a sweep-and-reject at 26,044", times(n, "09:30"), step=6)
     save(fig, "c22a")
 
@@ -469,7 +469,7 @@ def c22b():
          f"+{entry - sl[exit_i]:.1f} pts x 130 qty = +₹{(entry - sl[exit_i]) * 130:,.0f}", tx=36, ty=72)
     vline(ax, 66, "14:45 hard exit\n(if still open)", YEL, ls="--", y=97, ha="right", lw=1.2)
     note(ax, "Without the trail: 79 by 15:15", (72, 79), (40, 90), ec=DN)
-    frame(fig, ax, "Ch 22 · Managing the short: trail, and never hold past the cutoff",
+    frame(fig, ax, "Ch 23 · Managing the short: trail, and never hold past the cutoff",
           "5-min, same expiry-day path as Ch 10 · 2 lots x 65 = 130 qty", times(n), step=6)
     save(fig, "c22b")
 
@@ -504,7 +504,7 @@ def c23a():
     ax.set_xlim(-5, N + 22)
     ax.legend(loc="lower left")
     ax.set_xlabel("Trade number", fontsize=8)
-    _titles(fig, "Ch 23 · Same trades, different risk: why 1% survives",
+    _titles(fig, "Ch 24 · Same trades, different risk: why 1% survives",
             "Identical 150 trades from a small-edge system (45% win rate, +1.4R / -1R, illustrative). Start ₹2,70,000",
             "Illustrative simulation")
     fig.subplots_adjust(left=0.02, right=0.9, top=0.86, bottom=0.11)
@@ -536,7 +536,7 @@ def c23b():
             fontweight="bold")
     note(ax, "Plan was 1 lot with SL 52 (₹780 risk).\nAveraging turned it into 6 lots and a\n"
              "loss ~14x bigger than planned.", (12, 55), (1, 95), ec=DN)
-    frame(fig, ax, "Ch 23 · Averaging a losing short: how ₹780 of risk becomes ₹10,700",
+    frame(fig, ax, "Ch 24 · Averaging a losing short: how ₹780 of risk becomes ₹10,700",
           "Short CE premium, 5-min · Each add lowers nothing; it multiplies exposure in the wrong direction",
           times(n, "11:00"), step=6)
     save(fig, "c23b")
@@ -564,7 +564,7 @@ def c24a():
     ax.set_xticklabels([t[0] for t in trades], fontsize=7.2)
     ax.set_ylim(-62000, 11500)
     ax.legend(loc="lower left")
-    _titles(fig, "Ch 24 · Anatomy of a tilt day: size grows as discipline shrinks",
+    _titles(fig, "Ch 25 · Anatomy of a tilt day: size grows as discipline shrinks",
             f"Illustrative day on ₹2.7 lakh · Total {cum[-1]:,.0f} = {cum[-1] / 270000 * 100:.0f}% of capital in "
             "one session", "Illustrative")
     fig.subplots_adjust(left=0.02, right=0.9, top=0.86, bottom=0.14)
@@ -586,7 +586,7 @@ def c24b():
     ax.set_xticklabels([f"-{v}%" + (" (you)" if v == 46 else "") for v in dd], fontsize=8)
     ax.set_xlabel("Drawdown", fontsize=8)
     ax.set_ylim(0, 170)
-    _titles(fig, "Ch 24 · The math of recovery: gain needed to get back to the peak",
+    _titles(fig, "Ch 25 · The math of recovery: gain needed to get back to the peak",
             "Required gain = DD ÷ (1 − DD). From ₹5 lakh to ₹2.7 lakh needs +85%", "Arithmetic")
     fig.subplots_adjust(left=0.02, right=0.93, top=0.84, bottom=0.14)
     save(fig, "c24b")
@@ -609,7 +609,7 @@ def c25():
         ax.axvspan(a, b, color=col, alpha=0.1)
         ax.text((a + b) / 2, 25984, t, ha="center", va="top", fontsize=7.2, color=col if col != MUTED else TXT,
                 fontweight="bold")
-    frame(fig, ax, "Ch 25 · The trading day as time zones",
+    frame(fig, ax, "Ch 26 · The trading day as time zones",
           "5-min · Your edge is not equally available all day. Trade the windows, protect the rest", times(n),
           step=6)
     save(fig, "c25")
@@ -651,7 +651,7 @@ def c26():
         a.set_yticks([])
         a.set_ylim(-1, 5)
         a.grid(False)
-    _titles(fig, "Ch 26 · Cheat-sheet thumbnails: the 12 shapes to recognise", None, "Schematic")
+    _titles(fig, "Ch 27 · Cheat-sheet thumbnails: the 12 shapes to recognise", None, "Schematic")
     fig.subplots_adjust(left=0.01, right=0.99, top=0.9, bottom=0.02)
     save(fig, "c26")
 

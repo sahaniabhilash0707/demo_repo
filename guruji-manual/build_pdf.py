@@ -235,7 +235,7 @@ def on_cover(c, doc):
     c.drawString(LM, y, "“You earn in theta. You lose in gamma. You survive with rules.”")
     c.setFillColor(colors.HexColor("#8b93a5"))
     c.setFont("Body", 9.5)
-    c.drawString(LM, 24 * mm, "26 chapters · 43 annotated charts · 5 A+ setups · one-page cheat sheet · glossary")
+    c.drawString(LM, 24 * mm, "27 chapters · 45 annotated charts · 5 A+ setups · one-page cheat sheet · glossary")
     c.drawString(LM, 18 * mm, "Edition: October 2026 · Lot size 65 · Weekly expiry Tuesday · Educational use only")
     c.restoreState()
 
@@ -273,7 +273,7 @@ def front_matter(story):
         "<b>(c)</b> annotated chart(s), <b>(d)</b> a NIFTY example with realistic levels, <b>(e)</b> a rule-based "
         "entry, stop-loss and target, <b>(f)</b> common mistakes and <b>(g)</b> a three-point summary. All charts are "
         "generated from <b>synthetic</b> NIFTY data designed to show each pattern clearly; option premiums in "
-        "Chapters 10, 11 and 22 are computed with the Black-Scholes model from the spot path.",
+        "Chapters 10, 11 and 23 are computed with the Black-Scholes model from the spot path.",
     ])
     story.append(sec("", "Market facts verified for this edition (6 Oct 2026)"))
     story.append(kv_table(content_b.FACTS, col1=34 * mm))

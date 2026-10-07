@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Manual text, Part 1 and Part 2 (chapters 1-13). Numbers match the charts in charts/."""
+"""Manual text, Part 1 and Part 2 (chapters 1-14). Numbers match the charts in charts/."""
 
 CH = []
 
@@ -461,7 +461,7 @@ CH.append(dict(
         "14:20, for a <b>profit</b> of about ₹3,900 on 5 lots (11.9 pts × 325). Even without a trail, the 14:45 hard exit at ~54 "
         "would have limited the loss to about ₹1,000.",
     ],
-    trade=[("Entry", "Sell OTM premium only before 13:30 on expiry day, beyond the swept liquidity (Ch 22)"),
+    trade=[("Entry", "Sell OTM premium only before 13:30 on expiry day, beyond the swept liquidity (Ch 23)"),
            ("Stop-loss", "Initial SL at premium +30%; once 40% decayed, trail to lock half the open profit"),
            ("Target", "60-70% of premium captured, or the 14:45 cutoff, whichever first"),
            ("Hard rule", "All shorts flat by 14:45 on expiry day. No new shorts after 14:00"),
@@ -618,4 +618,68 @@ CH.append(dict(
     summary=["Famous patterns are liquidity maps for operators.",
              "The first break is often fake, so watch the volume.",
              "Trade the failure or the confirmed second break, with SL beyond the fake extreme."],
+))
+
+CH.append(dict(
+    num=14, part=2, title="The 20-Point Overshoot Trap at Round Numbers",
+    tagline="The level breaks by just enough to pull you in, and no further.",
+    concept=[
+        "NIFTY's hundred-levels (22,600, 22,700, 26,000) are where retail traders put breakout orders and "
+        "stop-losses. In the <b>overshoot trap</b>, price pushes about <b>15-25 points</b> through the round "
+        "number, far enough to trigger the breakout entries and the stops on the other side, then closes back "
+        "through the level and runs <b>100-120 points</b> the other way.",
+        "It works in both directions. A poke <b>above</b> a round number that fails is a bull trap (short it). A "
+        "flush <b>below</b> a round number that is reclaimed is a bear trap (buy it). The trap is strongest when "
+        "the round number lines up with another level: the day's pivot, PDH/PDL, or a supply or demand zone.",
+    ],
+    guruji="Beta, the operator doesn't need 100 points to trap you. Twenty is enough. Twenty points over 22,700 "
+           "makes the breakout buyer feel clever and fills the short-seller's stop. Then the real order comes.",
+    why=[
+        "A round number collects two crowds: breakout traders with buy-stop orders just above it, and short "
+        "sellers with stop-losses just above it. Both are buy orders. A large seller can't sell size into an empty "
+        "market, so he waits for that cluster of buying, or nudges price into it, and sells into it. Once those "
+        "orders are used up there is no buying left above the level. Price falls back under it, the new breakout "
+        "longs become trapped sellers, and their stop-losses below the range drive the next 100 points.",
+        "Twenty points is about the distance most intraday traders use for a breakout 'buffer' and their stop, so "
+        "it reaches both crowds without needing the bigger move a genuine breakout would make.",
+    ],
+    charts=[("c14a", "Synthetic replay: a flush under 22,600 is reclaimed in two bars and rallies 100 points; a "
+                     "low-volume poke to 22,721 closes back under 22,700 and falls 120 points to 22,580."),
+            ("c14b", "The reader's own NIFTY 5-min chart with their notes. At 22,600 price shook out around the "
+                     "level, then pushed 100 points up; at 22,700 (also the pivot) it poked about 20 points above, "
+                     "then fell about 120 points.", 0.98)],
+    example=[
+        "<b>From the reader's chart (NIFTY, 5-min).</b> After a sharp opening drop, NIFTY chops between 22,588 and "
+        "22,625, dipping under 22,600 more than once. Traders who sell the 'breakdown' are caught when price holds "
+        "and lifts away: it rallies about 100 points to 22,700.",
+        "22,700 is also the day's pivot (about 22,705) and the bottom of a supply zone. NIFTY spends more than an "
+        "hour under it, then one candle pokes to about 22,718: roughly 20 points over the level. The next candles "
+        "close back below 22,700, and the slide does not stop until about 22,580, roughly 120 points from the "
+        "level, with a low near 22,555 at the demand zone before a bounce.",
+        "<b>The rule-based short:</b> sell on the first 5-min close back under 22,700 (about 22,690), stop-loss "
+        "22,728 (above the poke high plus a 10-point buffer), first target 22,614 (2R, 76 points), final "
+        "target 22,580 or the next round number. Risk 38 points to make up to 110 (about 2.9R).",
+    ],
+    trade=[("Set-up", "Price grinds into a round number that is also a pivot / PDH / PDL or zone, and stalls"),
+           ("Trigger", "A poke 15-25 pts through the level on normal or LOW volume, then a 5-min close back "
+                       "inside within 1-3 candles"),
+           ("Entry", "On that close (short 22,690 in the example); for a bear trap, buy the close back above"),
+           ("Stop-loss", "Beyond the poke extreme + 10 pts (22,728). Never inside the overshoot band"),
+           ("Target", "T1 = 2R; T2 = 100-120 pts or the next round number / zone, whichever comes first"),
+           ("Invalidation", "Two 5-min closes beyond the poke extreme, or a poke on 2x volume = real breakout"),
+           ("Skip", "News in the next 30 min, the first 15 minutes of the day, or after 14:30 on expiry day")],
+    rule="Don't buy a round-number breakout until a 5-min candle closes beyond it AND the next candle holds. "
+         "If the level breaks by 20 points and closes back inside, that is your signal to trade the other way.",
+    mistakes=[
+        "Buying the first candle through 22,700 because 'the resistance is broken'.",
+        "Putting the stop-loss exactly 20 points past the round number, which is where this trap reaches.",
+        "Fading every round number: it only works when price stalls there and the poke is quiet. A loud, "
+        "high-volume break that holds is a real breakout.",
+        "Taking the trade before the candle closes back through the level, i.e. guessing the trap.",
+    ],
+    retail="Buying 22,700 CE at the 22,718 poke because 'it finally broke out', then averaging down all the way "
+           "to 22,600.",
+    summary=["Round numbers attract breakout orders and stops; a 15-25 point poke collects both.",
+             "Enter only after a 5-min close back through the level; SL beyond the poke + 10.",
+             "Target 2R, then 100-120 points; a high-volume poke that holds is a real breakout."],
 ))
