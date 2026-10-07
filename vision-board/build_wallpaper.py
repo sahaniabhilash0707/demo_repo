@@ -27,7 +27,7 @@ def art():
          f'<stop offset="0" stop-color="{GOLD}" stop-opacity=".45"/><stop offset="1" stop-color="{GOLD}" '
          'stop-opacity="0"/></radialGradient></defs>']
     o.append(f'<line x1="30" y1="{floor}" x2="1230" y2="{floor}" stroke="{SOFT}" stroke-width="2"/>')
-    o.append(f'<text x="1230" y="{floor + 42}" text-anchor="end" class="cap">CAPITAL · THE FLOOR YOU NEVER BREAK</text>')
+    o.append(f'<text x="1230" y="{floor + 42}" text-anchor="end" class="cap">YOUR CAPITAL · THE FLOOR YOU NEVER BREAK</text>')
     cx, cy = 150, 530
     for r, op in ((100, .9), (80, .6), (60, .38), (40, .2)):
         o.append(f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="none" stroke="{MUTED}" stroke-width="2" opacity="{op}"/>')
@@ -103,6 +103,11 @@ body{{background:radial-gradient(ellipse 60% 70% at 80% 30%, #142033 0%, rgba(11
   radial-gradient(ellipse 50% 50% at 40% 90%, #10261f 0%, rgba(11,14,20,0) 70%), {BG};
   padding:130px 150px {SAFE_B + 70}px {SAFE_L + 60}px;display:grid;grid-template-rows:1fr auto;gap:60px}}
 .top{{display:grid;grid-template-columns:1fr 1240px;gap:70px;align-items:center}}
+.own{{border-left:4px solid {GOLD};padding:6px 0 6px 40px;margin-bottom:34px}}
+.own .ok{{font-size:20px;letter-spacing:6px;font-weight:600;color:{GOLD}}}
+.own .ot{{font-family:'Cormorant';font-weight:600;font-size:86px;line-height:1;margin-top:14px;color:{INK};letter-spacing:-1px}}
+.own .ot em{{font-style:italic;font-weight:500;color:{GOLD}}}
+.own p{{font-size:27px;line-height:1.45;color:{SOFT};font-weight:300;margin-top:20px;max-width:1100px}}
 .eyebrow{{font-size:24px;letter-spacing:7px;font-weight:500;color:{MUTED}}}
 h1{{font-family:'Cormorant';font-weight:600;line-height:.86;margin-top:26px;letter-spacing:-3px}}
 h1 .n{{font-size:360px;color:{GOLD};display:block;line-height:.78;font-variant-numeric:lining-nums;font-feature-settings:"lnum" 1}}
@@ -159,7 +164,12 @@ svg .soft{{fill:{SOFT}}} svg .red{{fill:{RED}}} svg .green{{fill:{GREEN_L}}} svg
       <div class="dots">{dots()}</div>
       <div class="lg"><span><u></u>SMALL WIN</span><span><u class="r"></u>SMALL PLANNED LOSS</span><span><u class="o"></u>NO SETUP, NO TRADE</span></div></div>
   </div>
-  <div class="art">{art()}</div>
+  <div class="right">
+    <div class="own"><div class="ok">THE CAPITAL</div>
+      <div class="ot">This is <em>your own money.</em><br>Protect it first.</div>
+      <p>Every rupee in this account was earned by you, not given by the market. Lose it, and it takes years to
+        earn back. Guard it like your salary, because it is.</p></div>
+    <div class="art">{art()}</div></div>
 </section>
 <section class="bottom">
   <div><div class="k">THIS WEEK ONLY</div>{meter()}</div>
