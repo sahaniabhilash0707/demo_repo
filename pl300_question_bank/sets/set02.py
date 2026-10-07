@@ -14,12 +14,12 @@ single("P1",
 
 single("P1",
  "Each month a new CSV file with the same columns is saved to the same SharePoint Online folder. The report must include every file, and new files must be picked up automatically on refresh. How should you connect?",
- ["Connect to each file with the Text/CSV connector and append them", "Use the SharePoint folder connector, filter to the folder, and use Combine files", "Use the Web connector with the URL of the newest file", "Ask the business to paste each month into one workbook"], "B",
+ ["Connect to each file with the Text/CSV connector and append them", "Use the SharePoint folder connector and Combine files", "Use the Web connector with the URL of the newest file", "Ask the business to paste each month into one workbook"], "B",
  "The SharePoint folder connector lists every file, and Combine files applies the same transformation to all of them through a sample file. New files in the folder are included on the next refresh. Connecting file by file means editing the query every month."),
 
 single("P1",
  "Ten semantic models in different workspaces each clean the same Customer table from the ERP system with the same 25 Power Query steps. You want the logic in one place in the Power BI service, reusable by all ten models. What should you create?",
- ["A dataflow that produces the cleaned Customer table", "A .pbit template containing the query", "A calculated table in each model", "A bookmark containing the steps"], "A",
+ ["A dataflow for the cleaned Customer table", "A .pbit template containing the query", "A calculated table in each of the ten models", "A shared bookmark containing the 25 steps"], "A",
  "A dataflow runs Power Query in the service and stores the result, so any semantic model can connect to the cleaned table. Changes are made once. A template is a starting point that still copies the steps into each file. Calculated tables are DAX and can't call the ERP connector."),
 
 single("P1",
@@ -30,12 +30,12 @@ single("P1",
 # ---------------- P2 Profile and clean (3)
 single("P2",
  "A numeric Discount column has a few cells that show Error after a type change. Every row must be kept, and the failed cells must become null. Which action should you use?",
- ["Remove errors", "Replace errors, with the value null", "Remove blank rows", "Keep errors"], "B",
+ ["Remove errors from the Discount column", "Replace errors, with the value null", "Remove blank rows, then change the type", "Keep errors"], "B",
  "Replace errors keeps the rows and substitutes a value of your choice, here null. Remove errors deletes the rows that contain errors, which breaks the requirement. Keep errors does the opposite, keeping only the failing rows, which is useful for investigation but not as a fix."),
 
 single("P2",
  "A CSV from the German subsidiary stores amounts as 1.234,56. On your English (United States) machine they load as text or wrong numbers. What should you do?",
- ["Use Replace values to swap commas and dots", "Use Change Type → Using Locale, with type Decimal Number and locale German (Germany)", "Change the Windows regional settings of the gateway", "Set the column's data category to Currency"], "B",
+ ["Use Replace values to swap the commas and dots, then change type", "Change Type → Using Locale, with locale German (Germany)", "Change the Windows regional settings of the gateway", "Set the column's data category to Currency"], "B",
  "Change Type Using Locale tells Power Query which culture the source text uses, so the separators are interpreted correctly wherever the file is refreshed. Replacing characters by hand is fragile. Machine settings shouldn't decide how data is parsed. A data category doesn't parse text."),
 
 single("P2",
@@ -53,7 +53,7 @@ yesno("P3",
 
 single("P3",
  "You need, for each customer, only their most recent order row, with all of that row's columns. Which approach works in Power Query?",
- ["Group by CustomerID with All rows, then extract the row with the latest OrderDate from each nested table", "Remove duplicates on CustomerID without sorting", "Pivot OrderDate", "Append the Orders query to itself"], "A",
+ ["Group by CustomerID (All rows), then take each table's latest row", "Remove duplicates on CustomerID without sorting the table first", "Pivot the OrderDate column by CustomerID", "Append the Orders query to itself, then remove duplicates"], "A",
  "Group by with the All rows operation keeps each customer's rows as a nested table, from which you can take the row with the maximum date (for example with Table.Max). Removing duplicates without a guaranteed sort order isn't reliable for picking the latest row. Pivoting and appending don't solve the problem."),
 
 single("P3",
@@ -74,7 +74,7 @@ order("P3",
 # ---------------- M1 Design and implement a model (4)
 single("M1",
  "A Budget table holds amounts per product Category per month. The Product table has one row per product, including a Category column. Users must filter both budget and actual sales by category with one slicer. What is the recommended design?",
- ["Create a Category dimension with one row per category, related one-to-many to both Product and Budget", "Relate Budget to Sales directly on Category", "Merge Budget into Product", "Create a one-to-one relationship between Budget and Product"], "A",
+ ["A Category dimension related one-to-many to both Product and Budget", "Relate Budget directly to Sales on the Category column, many-to-many", "Merge Budget into Product", "Create a one-to-one relationship between Budget and Product"], "A",
  "A Category dimension at the budget's grain can filter Budget directly and Product (and through it Sales). The slicer uses Category[Category]. Relating two facts directly, or merging budget values into a product-grain table, breaks the grain. A one-to-one relationship isn't possible because many products share a category."),
 
 single("M1",
@@ -84,19 +84,19 @@ single("M1",
 
 single("M1",
  "Sales managers want a slider on the report to try discount rates from 0% to 30% and see the effect on projected revenue. Which feature creates the table and measure they need?",
- ["A numeric range parameter (what-if parameter)", "A calculation group", "A bookmark", "Incremental refresh"], "A",
+ ["A numeric range parameter (what-if parameter)", "A calculation group with one item per discount rate", "A bookmark for each discount rate", "Incremental refresh"], "A",
  "A numeric range parameter creates a calculated table of values, a measure that returns the selected value, and a slider slicer. Your revenue measure then references the parameter measure. Calculation groups apply logic to existing measures. Bookmarks and incremental refresh solve different problems."),
 
 single("M1",
  "A Margin % measure shows 0.2381 in visuals. It must always show as 23.8% wherever it's used. What should you change?",
- ["The measure's Format to Percentage with one decimal place", "Each visual's data label format", "The DAX to multiply by 100", "The data type of the Sales table"], "A",
+ ["The measure's format: Percentage, one decimal place", "Each visual's data label display units and decimals", "The DAX, to multiply the result by 100 and round", "The data type of the Sales table"], "A",
  "A format string on the measure applies wherever the measure is used, in every visual and report built on the model. Formatting each visual must be repeated. Multiplying by 100 shows 23.81 without a % sign and breaks other calculations."),
 
 # ---------------- M2 DAX (5 + 1 in case)
 single("M2",
  "Sales has an Amount column. You need the number of sales rows where Amount is greater than 1,000, in the current filter context. Which measure is correct?",
- ["CALCULATE ( COUNTROWS ( Sales ), Sales[Amount] > 1000 )", "COUNTROWS ( Sales ) > 1000", "COUNTX ( Sales, 1000 )", "SUM ( Sales[Amount] ) > 1000"], "A",
- "The filter argument keeps only rows with Amount above 1,000, and COUNTROWS counts them while respecting the visual's existing filters. The other expressions return TRUE or FALSE, or count every row."),
+ ["CALCULATE ( COUNTROWS ( Sales ), Sales[Amount] > 1000 )", "COUNTROWS ( Sales ) > 1000", "COUNTX ( Sales, Sales[Amount] > 1000 )", "CALCULATE ( SUM ( Sales[Amount] ), Sales[Amount] > 1000 )"], "A",
+ "The filter argument keeps only rows with Amount above 1,000, and COUNTROWS counts them while respecting the visual's existing filters. The others return TRUE or FALSE, count every row, or add up amounts instead of counting rows."),
 
 single("M2",
  "Sales has Quantity and UnitPrice columns but no revenue column. You need a Revenue measure without adding a column. Which expression is correct?",
@@ -111,14 +111,14 @@ single("M2",
 
 single("M2",
  "What is the main benefit of the VAR in this measure?",
- ["The variable is evaluated once and reused, which makes the measure easier to read and avoids calculating [Total Sales] twice", "Variables are stored in the model and reused by other measures", "VAR forces the measure to ignore slicers", "VAR turns the measure into a calculated column"], "A",
+ ["Each variable is evaluated once, then reused in the RETURN", "Variables are stored in the model, so other measures can reuse their values", "VAR fixes the filter context, so the measure ignores slicers", "VAR turns the measure into a calculated column"], "A",
  "A variable is evaluated once, where it's defined, and can be referenced several times in the RETURN. That improves readability and performance. Variables exist only inside that measure's evaluation. They don't change filter context or storage.",
  code="Sales Growth % =\nVAR Curr = [Total Sales]\nVAR Prev = [Sales PY]\nRETURN DIVIDE ( Curr - Prev, Prev )"),
 
 single("M2",
  "A measure must return \"High\" when [Margin %] is at least 40%, \"Medium\" when it's at least 20%, otherwise \"Low\". Which pattern is the clearest?",
- ["SWITCH ( TRUE (), [Margin %] >= 0.4, \"High\", [Margin %] >= 0.2, \"Medium\", \"Low\" )", "SWITCH ( [Margin %], 0.4, \"High\", 0.2, \"Medium\", \"Low\" )", "IF ( [Margin %], \"High\", \"Low\" )", "LOOKUPVALUE ( [Margin %], \"High\" )"], "A",
- "SWITCH(TRUE(), ...) tests each condition in order and returns the first match, which handles ranges. SWITCH on the value itself only matches exact values like 0.4. IF with no comparison isn't a range test. LOOKUPVALUE retrieves column values."),
+ ["SWITCH ( TRUE (), [Margin %] >= 0.4, \"High\", [Margin %] >= 0.2, \"Medium\", \"Low\" )", "SWITCH ( [Margin %], 0.4, \"High\", 0.2, \"Medium\", \"Low\" )", "IF ( [Margin %], \"High\", \"Low\" )", "SWITCH ( TRUE (), [Margin %] >= 0.2, \"Medium\", [Margin %] >= 0.4, \"High\", \"Low\" )"], "A",
+ "SWITCH(TRUE(), ...) tests each condition in order and returns the first match, which handles ranges. SWITCH on the value itself only matches exact values like 0.4. IF with no comparison isn't a range test. Testing 20% first returns Medium for every margin of 20% or more, so High is never reached."),
 
 # ---------------- M3 Optimize (2)
 single("M3",
@@ -128,13 +128,13 @@ single("M3",
 
 single("M3",
  "A 200-million-row fact table has a TransactionDateTime column with a different value on almost every row. It's the largest column in the model. Reports filter by date and by hour. What should you do?",
- ["Split it into a Date column and a Time column (or hour) in Power Query, and remove the original", "Change it to Text", "Mark the table as a date table", "Set the column's Summarize by to None"], "A",
+ ["Split it into Date and hour columns, then remove the original", "Change it to Text", "Mark the fact table as a date table using this column", "Set the column's Summarize by to None and hide it from report view"], "A",
  "Column size is driven by cardinality. Splitting date and time gives two columns with far fewer distinct values, which compress much better, and the Date column can relate to the date table. Text would be larger. Marking a date table or changing summarisation doesn't change storage."),
 
 # ---------------- V1 Create reports (5)
 single("V1",
  "A table shows revenue growth by product. Users want a green up arrow when growth is positive and a red down arrow when it's negative. What should you configure?",
- ["Conditional formatting → Icons, with rules on the growth value", "Data bars on the growth column", "A bookmark for positive growth", "Sort the table by growth"], "A",
+ ["Conditional formatting → Icons on the growth column", "Conditional formatting → Data bars on the growth column", "A bookmark for positive growth", "Sort the table by growth"], "A",
  "Icon conditional formatting places icons such as arrows next to values, based on rules or a field value. Data bars show magnitude, not direction. Bookmarks and sorting don't add indicators."),
 
 match("V1",
@@ -148,12 +148,12 @@ match("V1",
 
 single("V1",
  "A report will be shown on a wall display with an ultra-wide 32:9 screen. The page must fill the screen without letterboxing. What should you change?",
- ["Canvas settings → Type: Custom, with a width and height matching 32:9", "The page view to Actual size", "The theme", "The mobile layout"], "A",
+ ["Canvas settings → Custom size matching 32:9", "The page view, set to Actual size instead of Fit to page", "The theme", "The mobile layout"], "A",
  "Canvas settings control the page size. A custom size can match any aspect ratio. Page view changes how the page is displayed in the editor, not its dimensions. Themes change styling. Mobile layout is for phones."),
 
 single("V1",
  "You plan to use Copilot to create a new report page from a prompt. What change to the semantic model will most improve the quality of what Copilot builds?",
- ["Add clear names, descriptions and synonyms to tables, columns and measures", "Switch every table to DirectQuery", "Turn on Auto date/time", "Remove all relationships"], "A",
+ ["Add clear names, descriptions and synonyms", "Switch every table to DirectQuery so Copilot sees live data", "Turn on Auto date/time", "Remove all relationships"], "A",
  "Copilot works from the model's metadata. Descriptive names, descriptions and synonyms help it choose the right fields and measures. Storage mode and Auto date/time don't help it understand the data, and removing relationships breaks the model."),
 
 single("V1",
@@ -164,12 +164,12 @@ single("V1",
 # ---------------- V2 Usability and storytelling (4 + 1 in case)
 single("V2",
  "You create a drillthrough page with Product[Category] in its Drill through well. What does Power BI add to the page automatically?",
- ["A Back button that returns users to the page they came from", "A slicer on Category", "A bookmark for every category", "A tooltip page"], "A",
+ ["A Back button to the source page", "A Category slicer synced to the source page", "A bookmark for every category", "A tooltip page"], "A",
  "When you add a field to the Drill through well, Power BI adds a Back button that takes users back to the source page. Category filtering comes from the drillthrough action itself, not from a slicer."),
 
 single("V2",
  "A Year slicer must keep the same selection on pages 1, 2 and 3, but page 4 must be filtered independently by its own Year slicer. What should you do?",
- ["In the Sync slicers pane, sync the slicer on pages 1–3 and leave page 4 unsynced", "Copy the slicer to every page", "Use a report-level filter on Year", "Use drillthrough from page 1"], "A",
+ ["Sync slicers: sync pages 1–3, leave page 4 unsynced", "Copy the slicer to every page", "Use a report-level filter on Year with a slicer on page 4", "Use drillthrough from page 1"], "A",
  "The Sync slicers pane controls, per page, whether a slicer shares its selection (Sync) and whether it's shown (Visible). Pages 1–3 sync and page 4 stays independent. A report-level filter applies to every page. Copying a slicer without syncing doesn't share the selection."),
 
 single("V2",
@@ -179,7 +179,7 @@ single("V2",
 
 single("V2",
  "A bar chart shows Revenue by Region. When users hover over a bar, the tooltip must also show the Margin % measure, which isn't on the chart. What is the simplest way?",
- ["Add Margin % to the visual's Tooltips well", "Create a report-page tooltip", "Add Margin % to the Y-axis", "Create a bookmark"], "A",
+ ["Add Margin % to the visual's Tooltips well", "Create a report-page tooltip that shows Margin %", "Add Margin % to the Y-axis", "Create a bookmark"], "A",
  "Fields in the Tooltips well appear in the default tooltip without being plotted. A report-page tooltip is for richer custom content. Adding the measure to the axis would plot it."),
 
 # ---------------- V3 Patterns and trends (3)
@@ -190,12 +190,12 @@ single("V3",
 
 single("V3",
  "A column chart shows a sharp drop in revenue from March to April. A manager wants Power BI to suggest which dimensions contributed most to the drop. What should they do?",
- ["Right-click the April column and choose Analyze → Explain the decrease", "Add a trend line", "Add a forecast", "Turn on data labels"], "A",
+ ["Analyze → Explain the decrease on the April column", "Add a trend line and an average line from the Analytics pane", "Add a forecast from the Analytics pane", "Turn on data labels"], "A",
  "Analyze → Explain the decrease runs an analysis of the change between the two points and shows which categories contributed. Trend lines, forecasts and data labels describe the series but don't explain the change."),
 
 single("V3",
  "Users ask the Q&A visual about \"turnover\", but the measure is called Revenue, so Q&A doesn't understand. What should you configure?",
- ["Add turnover as a synonym for the Revenue measure in Q&A setup or the model's synonyms", "Rename the Revenue measure Turnover", "Add a smart narrative", "Create a bookmark named turnover"], "A",
+ ["Add turnover as a synonym for Revenue", "Rename the Revenue measure Turnover", "Add a smart narrative that mentions turnover", "Create a bookmark named turnover"], "A",
  "Synonyms teach Q&A the alternative words users type, without renaming the measure for everyone else. Renaming breaks the business's standard terminology. Smart narrative and bookmarks don't change how Q&A interprets questions."),
 
 # ---------------- S1 Workspaces and assets (3 + 1 in case)
@@ -206,12 +206,12 @@ multi("S1",
 
 single("S1",
  "A sales manager wants a snapshot of a report page emailed to her and her team every Monday at 08:00. What should you set up?",
- ["A subscription on the report page", "A data alert", "A Publish to web link", "A deployment pipeline"], "A",
+ ["A subscription on the report page", "A data alert on a dashboard tile", "A Publish to web link", "A deployment pipeline with a weekly schedule"], "A",
  "A subscription emails a snapshot and link on a schedule, and the owner can include other recipients. A data alert fires when a dashboard tile crosses a threshold, not on a schedule. Publish to web is public. Deployment pipelines promote content between stages."),
 
 single("S1",
  "A semantic model uses DirectQuery to an on-premises Oracle database and is used by 200 people. Which gateway setup is appropriate?",
- ["A standard on-premises data gateway, installed on a server and managed centrally", "A personal-mode gateway on the developer's laptop", "No gateway; DirectQuery connects from each user's browser", "A virtual network gateway in Azure only"], "A",
+ ["A standard on-premises data gateway on a server", "A personal-mode gateway on the developer's laptop", "No gateway; DirectQuery connects from each user's browser", "A virtual network gateway in Azure only"], "A",
  "DirectQuery to an on-premises source needs a standard (enterprise) gateway. Personal mode supports only Import refresh for one user, and a laptop isn't always on. Browsers never connect to the database directly."),
 
 # ---------------- S2 Secure and govern (4)
@@ -232,7 +232,7 @@ single("S2",
 
 single("S2",
  "A model must hide the Salary column completely from some users. The column must not even appear in their field list or be queryable. Row filters aren't needed. Which feature, and where is it authored?",
- ["Object-level security, authored with an external tool such as Tabular Editor", "Row-level security, authored in Manage roles", "A sensitivity label on the model", "Hiding the column in report view"], "A",
+ ["Object-level security, authored in Tabular Editor", "Row-level security, authored in Manage roles", "A sensitivity label on the model", "Hiding the column in report view, in Power BI Desktop"], "A",
  "Object-level security secures tables or columns for a role, so they aren't visible or queryable. It's set through the XMLA endpoint or tools like Tabular Editor rather than the Desktop UI. RLS filters rows. Hidden columns can still be queried, and labels classify content."),
 
 # ---------------- Case study (P3, M2, V2, S1)
@@ -245,7 +245,7 @@ case("Northwind Traders",
  [
   single("P3",
    "After combining the files from the folder, every combined file still includes its Total row. Where and how should you remove it?",
-   ["In the Transform Sample File query, use Remove Rows → Remove bottom rows (1 row)", "In the final combined query, remove the last row", "Filter the Warehouse column to remove blanks", "Delete the Total rows in each CSV by hand"], "A",
+   ["In Transform Sample File, remove the bottom row", "In the final combined query, remove the last row", "Filter the Warehouse column to remove blanks", "Delete the Total rows in each CSV by hand"], "A",
    "Steps in Transform Sample File run against every file before they are appended, so removing the bottom row there drops each file's Total row. Removing the last row of the combined query only removes the final file's total. Editing the files by hand isn't sustainable."),
   single("M2",
    "Which measure counts orders that shipped late?",
@@ -257,7 +257,7 @@ case("Northwind Traders",
    "Drillthrough lets users right-click a warehouse on the summary page and open the detail page filtered to it, with a Back button. Bookmarks per warehouse don't scale. A synced slicer filters but doesn't navigate. Tooltip pages appear on hover."),
   single("S1",
    "How do you meet the operations manager's alert requirement?",
-   ["Pin a card showing today's late orders to a dashboard and set a data alert on the tile above 50", "Create a subscription to the report page", "Add conditional formatting to the card", "Use Publish to web"], "A",
+   ["Set a data alert on a dashboard tile of today's late orders", "Create a daily subscription to the report page", "Set conditional formatting on the card to turn red above 50", "Use Publish to web"], "A",
    "Power BI data alerts are set on dashboard tiles such as cards, KPIs and gauges, and email the user when the value crosses the threshold. A subscription sends a scheduled snapshot whatever the value. Conditional formatting changes colour but sends nothing."),
  ]),
 ]
