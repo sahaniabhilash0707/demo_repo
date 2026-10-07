@@ -11,3 +11,7 @@ The message: protect the capital, follow the plan, take small daily wins, and wa
 - **Card 4:** a 31-month discipline tracker (Oct 2026 to Apr 2029, then May 2029) to tick by hand.
 
 Rebuild: `python3 build_board.py` (Node Playwright for the PNG, Chromium at /opt/pw-browsers for the PDF). Capital, risk and session count are constants at the top of the script.
+
+## Desktop wallpaper
+
+`Wallpaper_15_Points_a_Week.png` (2880×1800, 16:10, dark): the weekly rule. 15 points a week, then stop. It shows the loop-to-May-2029 line art, a weekly meter where 15 points is the stop line and anything beyond is the greed zone, and four rules. The left ~500 px and bottom ~120 px are kept clear for desktop icons and the taskbar. Rebuild with `python3 build_wallpaper.py`; the target is `TARGET` at the top of the script.
