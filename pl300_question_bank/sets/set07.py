@@ -9,17 +9,17 @@ ITEMS = [
 # ---------------- P1 Get or connect to data (3 + 1 in case)
 single("P1",
  "A Direct Lake semantic model built on a lakehouse's SQL analytics endpoint is fast most of the time. Visuals that use one table, which is actually a SQL view, are consistently slower. What explains this?",
- ["Queries against a SQL view fall back to DirectQuery, because Direct Lake reads Delta tables only", "Direct Lake caches views for 24 hours", "Views are always imported", "The capacity is paused"], "A",
+ ["Views fall back to DirectQuery; Direct Lake reads Delta tables only", "Direct Lake re-imports views on every query instead of caching them", "Views are always imported", "The capacity is paused"], "A",
  "Direct Lake loads column data from Delta tables in OneLake. Views aren't Delta tables, so a Direct Lake on SQL model answers those queries through DirectQuery fallback. Materialising the view as a Delta table restores Direct Lake behaviour."),
 
 single("P1",
  "A DirectQuery report queries a large SQL function that takes a CountryCode argument. A slicer selection must be passed into the M query so the source only computes the chosen country. What should you use?",
- ["A dynamic M query parameter bound to the slicer's column", "A what-if parameter", "A calculation group", "A report-level filter"], "A",
+ ["A dynamic M query parameter bound to the slicer", "A what-if parameter whose value the M query reads", "A calculation group", "A report-level filter"], "A",
  "Dynamic M query parameters let a slicer or filter value be bound to an M parameter, which is then used inside the source query or function. What-if parameters are DAX tables. Calculation groups change measures. A report filter is applied to the generated query, not passed as a function argument."),
 
 single("P1",
  "On Premium capacity, a sales table holds five years of history. Imported performance is needed for history, but today's orders must appear immediately without waiting for a refresh. What should you configure?",
- ["Incremental refresh with the option to get the latest data in real time with DirectQuery (a hybrid table)", "Import with 48 scheduled refreshes", "DirectQuery for the whole table", "A separate report for today"], "A",
+ ["Incremental refresh with real-time DirectQuery data (a hybrid table)", "Import with 48 scheduled refreshes a day, one every 30 minutes", "DirectQuery for the whole table, including the five years of history", "A separate DirectQuery report for today's orders only"], "A",
  "A hybrid table keeps historical partitions imported and adds a DirectQuery partition for the most recent period, so the latest rows are queried live. Scheduled refresh still lags. Full DirectQuery gives up Import performance for history. Separate reports fragment the analysis."),
 
 # ---------------- P2 Profile and clean (3)
@@ -30,18 +30,18 @@ single("P2",
 
 single("P2",
  "With profiling switched to the entire data set, a CustomerID column in a 1,000,000-row table shows 1,000,000 distinct and 1,000,000 unique values, with 0% empty. What can you conclude?",
- ["Every value occurs exactly once, so the column can act as the key of a dimension", "The column has many duplicates", "Half the values are blank", "The column must be split before use"], "A",
+ ["Every value occurs once, so it can be a dimension key", "The column has many duplicates, so it can't be used as a key", "Half the values are blank", "The column must be split before use"], "A",
  "When distinct and unique both equal the row count and nothing is empty, every value appears once: the definition of a usable key. Duplicates would make unique lower than distinct."),
 
 single("P2",
  "The data team must review rows that fail type conversion each day, but the model must load only valid rows. What is the cleanest Power Query design?",
- ["Create a reference query that uses Keep errors for review (not loaded), and use Remove errors in the main query", "Use Replace errors with 0 in the main query", "Turn off Column quality", "Load both valid and invalid rows into the model"], "A",
+ ["Keep errors in an unloaded reference query; Remove errors in the main query", "Use Replace errors with 0 in the main query", "Turn off Column quality", "Load both valid and invalid rows into the model, and hide the invalid ones with a report filter"], "A",
  "A reference query that keeps errors gives the team a review list, and the main query removes them so only valid rows load. Replacing errors with 0 hides problems and distorts totals. Loading invalid rows pollutes the model."),
 
 # ---------------- P3 Transform and load (5)
 single("P3",
  "When you configure incremental refresh, Power BI warns that the query can't be folded. The query filters on RangeStart and RangeEnd, but an Added Index Column step comes before the filter. What should you do?",
- ["Remove the index step, or move the date filter before it, so the filter folds to the source", "Ignore the warning; folding isn't relevant", "Change the parameters to Text", "Turn off Enable load"], "A",
+ ["Move the date filter before the index step, or remove the index", "Ignore the warning; folding only affects DirectQuery, not incremental refresh", "Change the parameters to Text", "Turn off Enable load"], "A",
  "Adding an index column usually stops folding, so later steps run locally and each refresh would read the full table. The RangeStart/RangeEnd filter must fold so each partition reads only its own rows. Parameter types must stay Date/Time."),
 
 single("P3",
@@ -51,7 +51,7 @@ single("P3",
 
 single("P3",
  "A JSON field named tags holds a list such as {\"red\", \"sale\", \"new\"} for each product. You need one text column per product containing \"red, sale, new\", keeping one row per product. What should you do?",
- ["Use Extract Values on the list column with a comma delimiter", "Expand the list to new rows", "Pivot the tags column", "Use Split column into rows"], "A",
+ ["Extract Values on the list, with a comma delimiter", "Expand the list to new rows, then remove duplicates", "Pivot the tags column", "Use Split column into rows"], "A",
  "Extract Values concatenates the items of a list into one text value with a delimiter, keeping the row count unchanged. Expanding to new rows creates one row per tag. Pivot and split don't apply to a list column here."),
 
 match("P3",
@@ -76,17 +76,17 @@ order("P3",
 # ---------------- M1 Design and implement a model (4)
 single("M1",
  "In a composite model, an imported Budget table is related to a DirectQuery Sales table from a different source. Power BI marks the relationship as limited. Which statement is true?",
- ["RELATED can't be used across a limited relationship, and no blank row is added for unmatched values", "The relationship behaves exactly like a regular one-to-many relationship", "The relationship is automatically converted to Import", "Limited relationships only exist in Direct Lake models"], "A",
+ ["RELATED can't cross it, and no blank row is added for unmatched values", "The relationship behaves exactly like a regular one-to-many relationship", "The relationship is automatically converted to Import", "Limited relationships only exist in Direct Lake models"], "A",
  "Relationships across source groups are limited: the join is evaluated as an inner join between groups, unmatched rows don't produce a blank member, and functions such as RELATED aren't available across them. This affects totals and DAX, so design with it in mind."),
 
 single("M1",
  "RLS is defined on a Users table that relates to a UserRegion bridge table, which relates to Region and then Sales. The role's filter doesn't reach Sales because one relationship filters the wrong way. What should you configure on that relationship?",
- ["Set cross-filter direction to Both and turn on Apply security filter in both directions", "Make the relationship inactive", "Change cardinality to one-to-one", "Hide the bridge table"], "A",
+ ["Set it to Both and turn on Apply security filter in both directions", "Make the relationship inactive and activate it with USERELATIONSHIP in the role", "Change cardinality to one-to-one", "Hide the bridge table"], "A",
  "For a security filter to travel against a relationship's default direction, the relationship must be bidirectional and set to apply security filters in both directions. Making it inactive or hiding the table stops the filter altogether."),
 
 single("M1",
  "An AgeBand column (\"18–24\", \"25–34\"…) is used in many slicers. Where should you create it for the best model compression and reuse?",
- ["As far upstream as possible: in the source or in Power Query, rather than as a DAX calculated column", "As a measure", "As a visual calculation", "In each report as a group"], "A",
+ ["In the source or Power Query", "As a measure that returns the band for each customer", "As a visual calculation", "In each report, as a group on the Age column"], "A",
  "Columns created in the source or Power Query are compressed together with the rest of the table and are available to every downstream tool. DAX calculated columns are computed after load and are generally less efficient. Measures and visual calculations can't be used as slicer fields."),
 
 yesno("M1",
@@ -104,7 +104,7 @@ single("M2",
 
 single("M2",
  "A calculation group has items Current, PY and YoY %. YoY % must display as a percentage, while the others keep the original measure's currency format. What should you configure?",
- ["A dynamic format string expression on the YoY % calculation item", "A separate measure for every combination", "The Format property of the calculation group column", "A theme"], "A",
+ ["A dynamic format string on the YoY % calculation item", "A separate measure for every combination", "The Format property of the calculation group column in the model", "A theme"], "A",
  "Calculation items can have a format string expression that overrides the measure's format for that item only, for example \"0.0%\". Setting a column format would apply to every item. Separate measures defeat the purpose of the group."),
 
 single("M2",
@@ -130,18 +130,18 @@ single("M2",
 # ---------------- M3 Optimize (1 + 1 in case)
 single("M3",
  "A DirectQuery fact table has 5 billion rows. Most visuals show sales by month and product category. You add an imported summary table at that grain. What else is needed so those visuals use the summary automatically?",
- ["Configure Manage aggregations on the summary table, mapping its columns to the detail table", "Rename the summary table Sales", "Create a relationship between the summary and the detail table", "Turn on Auto date/time"], "A",
+ ["Manage aggregations on the summary table, mapped to the detail table", "Rename the summary table Sales", "Create a relationship between the summary and the detail table on their keys", "Turn on Auto date/time"], "A",
  "User-defined aggregations need the summary table's columns mapped (Sum, GroupBy and so on) to the detail table's columns in Manage aggregations. The engine then redirects matching queries to the in-memory summary. Renaming or relating the tables doesn't enable aggregation awareness."),
 
 # ---------------- V1 Create reports (4 + 1 in case)
 single("V1",
  "A Power BI report page must show an operational paginated report, with its parameters passed from the page's slicers. What should you add?",
- ["The Paginated report visual, mapping report fields to the paginated report's parameters", "An image of the paginated report", "A web URL to Report Builder", "A Q&A visual"], "A",
+ ["The Paginated report visual, with fields mapped to its parameters", "An image of the paginated report", "A web URL to Report Builder with the parameters in the query string", "A Q&A visual"], "A",
  "The Paginated report visual renders a published paginated report inside a Power BI report and can pass field values into its parameters, so slicers drive it. Images and links don't stay in sync with the page's filters."),
 
 single("V1",
  "Across 40 reports, every new card visual must have its category label turned off and a specific font size, by default. What is the most maintainable approach?",
- ["Add visualStyles settings for the card visual to the corporate JSON theme", "Format each card manually", "Copy one formatted card into every report", "Use a bookmark"], "A",
+ ["Add card visualStyles to the corporate JSON theme", "Format each card manually", "Copy one formatted card into every report and use it as a template", "Use a bookmark"], "A",
  "A JSON theme can set default formatting for specific visual types through visualStyles, so every new card follows the standard. Manual formatting and copying don't scale and drift over time."),
 
 single("V1",
@@ -157,22 +157,22 @@ single("V1",
 # ---------------- V2 Usability and storytelling (5)
 single("V2",
  "In an Import-mode report, the Page refresh option is missing from the page's format settings. Why?",
- ["Automatic page refresh is only available for pages using DirectQuery (or other supported live) sources", "The theme disables it", "Page refresh requires a mobile layout", "The page has more than ten visuals"], "A",
+ ["It's only available for DirectQuery and similar sources", "The theme disables it", "Page refresh needs a mobile layout before it appears in settings", "The page has more than ten visuals"], "A",
  "Automatic page refresh re-queries the source. Imported data only changes on refresh, so the feature applies to DirectQuery and similar sources. The other options aren't related."),
 
 single("V2",
  "Each chart's alt text must describe its current values for screen-reader users, for example \"Revenue this month: 1.2M\", and update as filters change. What should you do?",
- ["Use conditional formatting (fx) on the Alt text property with a measure that builds the description", "Type a fixed alt text for each chart", "Add a text box under each chart", "Use a high-contrast theme"], "A",
+ ["Set the Alt text with fx to a measure that builds the description", "Type a fixed alt text for each chart that includes this month's value", "Add a text box under each chart", "Use a high-contrast theme"], "A",
  "Alt text can be driven by a measure, so screen readers announce current, filtered values. Fixed alt text goes stale. Text boxes add clutter and aren't tied to the visual. High contrast helps low-vision users but doesn't add descriptions."),
 
 single("V2",
  "Two different slicers, one on page 1 and one on page 3, both use Date[Year] and must share a selection. They aren't copies of each other. What should you configure?",
- ["In Sync slicers advanced options, give both slicers the same group name", "Copy one slicer over the other", "Use a report-level filter", "Use drillthrough"], "A",
+ ["Give both slicers the same group name in Sync slicers", "Copy one slicer over the other", "Use a report-level filter on Date[Year] instead of slicers", "Use drillthrough"], "A",
  "Sync slicers groups let separate slicers on the same field share their selection, even if they weren't copied from each other. A report filter applies everywhere but isn't interactive in the same way."),
 
 single("V2",
  "Across a whole report, selecting a data point should cross-filter other visuals instead of cross-highlighting them, without setting Edit interactions for every pair of visuals. What should you change?",
- ["The report setting that changes the default visual interaction from cross-highlighting to cross-filtering", "Each visual's format pane", "The theme", "Persistent filters"], "A",
+ ["The report's default visual interaction setting", "Each visual's format pane, under the Interactions card", "The theme", "The persistent filters setting for the report"], "A",
  "A report-level setting switches the default interaction for every visual to filtering. Edit interactions is still available for exceptions. Themes and persistent filters don't control interactions."),
 
 multi("V2",
@@ -204,33 +204,33 @@ single("S1",
 
 single("S1",
  "The team wants to deploy metadata changes, such as new measures and partitions, to a published model with Tabular Editor, without republishing the .pbix. What must be enabled?",
- ["XMLA endpoint set to Read Write on the capacity", "Publish to web", "Persistent filters", "Usage metrics"], "A",
+ ["XMLA endpoint set to Read Write", "Publish to web", "Persistent filters on the semantic model", "Usage metrics"], "A",
  "External tools write to published models through the XMLA endpoint, which must be set to Read Write in the capacity settings. The other features don't let tools change models."),
 
 single("S1",
  "In a deployment pipeline, the compare view shows that only one of 12 reports changed in Development. You want to deploy just that report to Test. What should you do?",
- ["Select only the changed report and deploy it (selective deployment)", "Deploy all content every time", "Recreate the Test workspace", "Publish from Desktop directly to Test"], "A",
+ ["Select only the changed report and deploy it", "Deploy all content every time", "Recreate the Test workspace", "Publish the report from Desktop directly to the Test workspace"], "A",
  "Deployment pipelines let you choose which items to deploy, so only the changed report moves to Test. Deploying everything works but risks overwriting other work. Publishing directly bypasses the pipeline."),
 
 single("S1",
  "On Premium capacity, a Sales dashboard must show data no more than 15 minutes old. Why can't a 15-minute scheduled refresh be configured for an Import model, and what is a better fit?",
- ["Scheduled refresh is set in 30-minute slots up to 48 times a day; use DirectQuery or a hybrid table for fresher data", "Premium allows only 8 refreshes per day", "Scheduled refresh can't run on weekdays", "Import models can't be refreshed on Premium"], "A",
+ ["Refresh runs in 30-minute slots; use DirectQuery or a hybrid table", "Premium allows only 8 refreshes per day; use a Pro workspace instead", "Scheduled refresh can't run on weekdays", "Import models can't be refreshed on Premium"], "A",
  "The scheduled refresh UI allows up to 48 refreshes a day, in 30-minute slots, on Premium or Fabric capacity. Fresher data calls for DirectQuery, a hybrid table, or API-driven refreshes. Eight a day is the Pro limit."),
 
 # ---------------- S2 Secure and govern (3 + 1 in case)
 single("S2",
  "A DirectQuery model uses an on-premises SQL Server that already applies row filtering based on the connecting user. Each report user must reach SQL Server with their own identity. What should you configure?",
- ["Single sign-on (SSO) for DirectQuery on the gateway data source connection", "A personal gateway", "RLS roles with USERNAME()", "Publish to web"], "A",
+ ["SSO for DirectQuery on the gateway data source", "A personal gateway", "RLS roles with USERNAME() that copy the SQL filters", "Publish to web"], "A",
  "With SSO for DirectQuery through the gateway, each user's identity is passed to the source, so the source's own security applies. Otherwise every query runs under the stored credentials. Recreating the rules as RLS duplicates logic. A personal gateway doesn't support DirectQuery."),
 
 single("S2",
  "The organisation must stop all content from being shared with external guest users. Where is this controlled?",
- ["In the Fabric admin portal tenant settings for external sharing and guest access", "In each report's settings", "In the workspace's licence mode", "In Power Query privacy levels"], "A",
+ ["In the Fabric admin portal tenant settings", "In each report's settings", "In each workspace's licence mode and access settings", "In Power Query privacy levels"], "A",
  "Tenant settings in the admin portal control whether content can be shared with external users and what guests can do. Report, workspace and privacy-level settings don't govern external sharing for the whole organisation."),
 
 single("S2",
  "One workspace app must show the Sales audience three reports and the Finance audience five, and some reports appear in both. Each group must not see the other's reports. What should you configure?",
- ["App audiences, with each report included only in the right audiences and each audience granted to its security group", "Two workspaces with copies of the shared reports", "RLS roles named Sales and Finance", "Sensitivity labels"], "A",
+ ["App audiences, each with the right reports and security group", "Two separate workspaces and apps, each with copies of the shared reports", "RLS roles named Sales and Finance", "Sensitivity labels"], "A",
  "Audiences in one app control which content each group of users can see, without duplicating reports. RLS filters rows inside a model rather than hiding reports. Labels classify content."),
 
 # ---------------- Case study (P1, M3, V1, S2)
@@ -243,11 +243,11 @@ case("Tailspin Toys",
  [
   single("P1",
    "How should the live traffic page get its data?",
-   ["DirectQuery to the KQL database, with automatic page refresh at a short interval", "Import from the Eventhouse with scheduled refresh", "A CSV export every minute", "A dashboard tile with a data alert"], "A",
+   ["DirectQuery to the KQL database with automatic page refresh", "Import from the Eventhouse with scheduled refresh every minute", "A CSV export every minute", "A dashboard tile with a data alert"], "A",
    "DirectQuery to the KQL database queries the latest events, and automatic page refresh (allowed at short intervals on capacity) re-queries regularly. Scheduled Import refresh can't run every minute. CSV exports and alerts don't provide live visuals."),
   single("M3",
    "Which change will most reduce the overview page's load time?",
-   ["Replace the 14 cards with a few multi-value visuals, such as a card visual showing several measures, so fewer queries queue", "Rewrite each measure with variables", "Convert the model to Import", "Add a forecast to each card"], "A",
+   ["Replace the 14 cards with a few multi-value visuals", "Rewrite each card's measure with variables to cut its query time", "Convert the model to Import", "Add a forecast to each card"], "A",
    "Other is mostly time spent waiting for other visuals, so the number of visuals is the problem, not individual queries. Fewer visuals means fewer queries competing. The DAX is already fast, and storage mode isn't the bottleneck."),
   single("V1",
    "Which visual meets marketing's requirement?",
@@ -255,7 +255,7 @@ case("Tailspin Toys",
    "A funnel chart shows how many items reach each stage of a sequential process, making drop-off between stages visible. Waterfall charts show contributions to a total. Scatter charts compare two measures. Treemaps show part-to-whole."),
   single("S2",
    "You add dynamic RLS for regions, but analysts still see every region. What should you change?",
-   ["Make the analysts Viewers in the workspace and give them Build permission on the model, so RLS applies while they can still create reports", "Add the analysts to a second role", "Use USERNAME() instead of USERPRINCIPALNAME()", "Apply a sensitivity label"], "A",
+   ["Make the analysts Viewers with Build permission on the model", "Add the analysts to a second role with the same region filter", "Use USERNAME() instead of USERPRINCIPALNAME()", "Apply a sensitivity label"], "A",
    "Contributors, like Members and Admins, have edit rights and bypass RLS. As Viewers with Build permission, the analysts can create their own reports on the model, and RLS filters their data. The function choice and labels don't change the bypass."),
  ]),
 ]
