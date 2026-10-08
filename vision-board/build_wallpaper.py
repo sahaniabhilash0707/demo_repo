@@ -27,7 +27,7 @@ def art():
          f'<stop offset="0" stop-color="{GOLD}" stop-opacity=".45"/><stop offset="1" stop-color="{GOLD}" '
          'stop-opacity="0"/></radialGradient></defs>']
     o.append(f'<line x1="30" y1="{floor}" x2="1230" y2="{floor}" stroke="{SOFT}" stroke-width="2"/>')
-    o.append(f'<text x="1230" y="{floor + 42}" text-anchor="end" class="cap">YOUR CAPITAL · THE FLOOR YOU NEVER BREAK</text>')
+    o.append(f'<text x="1230" y="{floor + 42}" text-anchor="end" class="cap">CAPITAL · THE FLOOR YOU NEVER BREAK</text>')
     cx, cy = 150, 530
     for r, op in ((100, .9), (80, .6), (60, .38), (40, .2)):
         o.append(f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="none" stroke="{MUTED}" stroke-width="2" opacity="{op}"/>')
@@ -68,6 +68,47 @@ def art():
     return "\n".join(o)
 
 
+def fisherman():
+    """Line art: a fisherman waiting on a jetty; a fish is about to take the bait."""
+    st = f'stroke="{SOFT}" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"'
+    o = ['<svg viewBox="0 0 440 300" xmlns="http://www.w3.org/2000/svg">']
+    # jetty and posts
+    o.append(f'<path d="M10 140 L170 140 M30 140 L30 196 M150 140 L150 196" {st}/>')
+    # water surface and depth lines
+    o.append(f'<path d="M10 176 Q 40 170 70 176 T 130 176 T 190 176 T 250 176 T 310 176 T 370 176 T 430 176" '
+             f'stroke="#4fa3ff" stroke-width="2.5" fill="none" opacity=".7"/>')
+    for y, op in ((214, .25), (250, .15), (284, .1)):
+        o.append(f'<path d="M60 {y} Q 120 {y - 5} 180 {y} T 300 {y} T 420 {y}" stroke="#4fa3ff" stroke-width="1.5" '
+                 f'fill="none" opacity="{op}"/>')
+    # the fisherman, a still seated silhouette
+    fig = "#c9cfdb"
+    o.append(f'<ellipse cx="97" cy="57" rx="25" ry="4.5" fill="{fig}"/>')
+    o.append(f'<path d="M85 57 Q 87 38 97 38 Q 107 38 109 57 Z" fill="{fig}"/>')
+    o.append(f'<circle cx="98" cy="70" r="11" fill="{fig}"/>')
+    o.append(f'<path d="M86 84 Q 102 78 109 96 L113 136 L84 139 Q 78 112 86 84 Z" fill="{fig}"/>')
+    o.append(f'<path d="M104 94 L124 116" stroke="{fig}" stroke-width="8" stroke-linecap="round"/>')
+    o.append(f'<path d="M94 134 L134 136" stroke="{fig}" stroke-width="13" stroke-linecap="round"/>')
+    o.append(f'<path d="M133 137 L137 168" stroke="{fig}" stroke-width="9" stroke-linecap="round"/>')
+    # rod, line, float
+    o.append(f'<path d="M124 116 Q 225 40 340 22" {st}/>')
+    o.append(f'<path d="M340 22 L340 172" stroke="{SOFT}" stroke-width="1.5" opacity=".8"/>')
+    o.append(f'<path d="M340 186 L340 248" stroke="{SOFT}" stroke-width="1.5" opacity=".6"/>')
+    o.append(f'<ellipse cx="340" cy="179" rx="6" ry="9" fill="{RED}"/>')
+    # hook and bait
+    o.append(f'<path d="M340 248 L340 262 Q 340 272 332 270" stroke="{SOFT}" stroke-width="2" fill="none"/>')
+    o.append(f'<circle cx="345" cy="258" r="6" fill="{GOLD}"/>')
+    # the fish, mouth open, about to bite
+    o.append(f'<path d="M322 258 Q 300 240 268 252 Q 250 258 268 266 Q 300 276 322 260" stroke="{GREEN_L}" '
+             'stroke-width="3" fill="#3fbf93" fill-opacity=".18" stroke-linejoin="round"/>')
+    o.append(f'<path d="M268 252 L246 240 L250 259 L246 276 L268 266" stroke="{GREEN_L}" stroke-width="3" fill="none" '
+             'stroke-linejoin="round"/>')
+    o.append(f'<circle cx="308" cy="252" r="2.6" fill="{GREEN_L}"/>')
+    for x, y, r in ((316, 232, 3), (322, 218, 2.4), (318, 204, 1.8)):
+        o.append(f'<circle cx="{x}" cy="{y}" r="{r}" fill="none" stroke="{GREEN_L}" stroke-width="1.3" opacity=".7"/>')
+    o.append('</svg>')
+    return "".join(o)
+
+
 def meter():
     """This week's points: fill to the target, then the greed zone the past account died in."""
     mx = 25
@@ -103,11 +144,12 @@ body{{background:radial-gradient(ellipse 60% 70% at 80% 30%, #142033 0%, rgba(11
   radial-gradient(ellipse 50% 50% at 40% 90%, #10261f 0%, rgba(11,14,20,0) 70%), {BG};
   padding:130px 150px {SAFE_B + 70}px {SAFE_L + 60}px;display:grid;grid-template-rows:1fr auto;gap:60px}}
 .top{{display:grid;grid-template-columns:1fr 1240px;gap:70px;align-items:center}}
-.own{{border-left:4px solid {GOLD};padding:6px 0 6px 40px;margin-bottom:34px}}
-.own .ok{{font-size:20px;letter-spacing:6px;font-weight:600;color:{GOLD}}}
-.own .ot{{font-family:'Cormorant';font-weight:600;font-size:86px;line-height:1;margin-top:14px;color:{INK};letter-spacing:-1px}}
-.own .ot em{{font-style:italic;font-weight:500;color:{GOLD}}}
-.own p{{font-size:27px;line-height:1.45;color:{SOFT};font-weight:300;margin-top:20px;max-width:1100px}}
+.wait{{display:grid;grid-template-columns:400px 1fr;gap:40px;align-items:center;margin-bottom:24px}}
+.wait svg{{width:400px;display:block}}
+.wk{{font-size:20px;letter-spacing:6px;font-weight:600;color:{GREEN}}}
+.wt{{font-family:'Cormorant';font-weight:600;font-size:62px;line-height:1.02;margin-top:12px;color:{INK}}}
+.wt em{{font-style:italic;font-weight:500;color:{GREEN_L}}}
+.wait p{{font-size:24px;line-height:1.45;color:{SOFT};font-weight:300;margin-top:16px}}
 .eyebrow{{font-size:24px;letter-spacing:7px;font-weight:500;color:{MUTED}}}
 h1{{font-family:'Cormorant';font-weight:600;line-height:.86;margin-top:26px;letter-spacing:-3px}}
 h1 .n{{font-size:360px;color:{GOLD};display:block;line-height:.78;font-variant-numeric:lining-nums;font-feature-settings:"lnum" 1}}
@@ -165,10 +207,11 @@ svg .soft{{fill:{SOFT}}} svg .red{{fill:{RED}}} svg .green{{fill:{GREEN_L}}} svg
       <div class="lg"><span><u></u>SMALL WIN</span><span><u class="r"></u>SMALL PLANNED LOSS</span><span><u class="o"></u>NO SETUP, NO TRADE</span></div></div>
   </div>
   <div class="right">
-    <div class="own"><div class="ok">THE CAPITAL</div>
-      <div class="ot">This is <em>your own money.</em><br>Protect it first.</div>
-      <p>Every rupee in this account was earned by you, not given by the market. Lose it, and it takes years to
-        earn back. Guard it like your salary, because it is.</p></div>
+    <div class="wait">{fisherman()}
+      <div><div class="wk">THE REAL SKILL</div>
+        <div class="wt">The edge isn't the strategy.<br><em>It's the patience to wait.</em></div>
+        <p>Self-control to sit through the noise, and trade only when the best setup comes at the right time.
+          The fisherman doesn't chase the fish. He waits, still, until it takes the bait.</p></div></div>
     <div class="art">{art()}</div></div>
 </section>
 <section class="bottom">

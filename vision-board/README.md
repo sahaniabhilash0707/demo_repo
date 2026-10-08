@@ -14,4 +14,4 @@ Rebuild: `python3 build_board.py` (Node Playwright for the PNG, Chromium at /opt
 
 ## Desktop wallpaper
 
-`Wallpaper_15_Points_a_Week.png` (2880×1800, 16:10, dark): the weekly rule. 15 points a week, then stop. It shows the loop-to-May-2029 line art, a "singles, not sixes" dot grid, a weekly meter where 15 points is the stop line and anything beyond is the greed zone, and four rules. The left ~500 px and bottom ~120 px are kept clear for desktop icons and the taskbar. Rebuild with `python3 build_wallpaper.py`; the target is `TARGET` at the top of the script.
+`Wallpaper_15_Points_a_Week.png` (2880×1800, 16:10, dark): the weekly rule. 15 points a week, then stop. It shows the loop-to-May-2029 line art, a "singles, not sixes" dot grid, a fisherman line drawing for the patience rule (the edge is waiting for the best setup, not the strategy), a weekly meter where 15 points is the stop line and anything beyond is the greed zone, and four rules. The left ~500 px and bottom ~120 px are kept clear for desktop icons and the taskbar. Rebuild with `python3 build_wallpaper.py`; the target is `TARGET` at the top of the script.
